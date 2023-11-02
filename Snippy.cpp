@@ -2,6 +2,7 @@
 
 int Snippy::generate() {
 	if (!snippyIdleRight.loadFromFile("Snippy-1.png")) return EXIT_FAILURE;
+	return 0;
 }
 
 void Snippy::draw(sf::RenderWindow &window, sf::View &view, int &switch_control) {
