@@ -3,15 +3,15 @@
 int Jeff::generate() {
 	if (!jeff_standing_texture.loadFromFile(jeff_standing)) return EXIT_FAILURE;
 	if (!jeff_standing_left_texture.loadFromFile(jeff_standing_left)) return EXIT_FAILURE;
-	for (int i = 0; i < std::size(jeff_walking); i++) {
+	for (std::size_t i = 0; i < std::size(jeff_walking); i++) {
 		if (!jeff_walking_textures[i].loadFromFile(jeff_walking[i]))
 			return EXIT_FAILURE;
 	}
-	for (int i = 0; i < std::size(jeff_walking_left); i++) {
+	for (std::size_t i = 0; i < std::size(jeff_walking_left); i++) {
 		if (!jeff_walking_left_textures[i].loadFromFile(jeff_walking_left[i]))
 			return EXIT_FAILURE;
 	}
-	for (int i = 0; i < std::size(jeff_shooting); i++) {
+	for (std::size_t i = 0; i < std::size(jeff_shooting); i++) {
 		if (!jeff_shooting_textures[i].loadFromFile(jeff_shooting[i]))
 			return EXIT_FAILURE;
 	}
