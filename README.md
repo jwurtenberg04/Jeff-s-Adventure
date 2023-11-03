@@ -12,13 +12,15 @@ If you're on Windows, you'll need to download the [pre-compiled SFML libraries](
 - Static libraries (such as `.a` files) should go into `lib/`.
 - The SFML include directory should go into `include/`.
 
-Then, you can follow the typical CMake configure and build process. For example, beginning in the project directory:
+Then, you can follow the typical CMake configure, build, and install process. For example, beginning in the project directory:
 
 ```shell
 mkdir build
 cd build
 cmake -G Ninja -D CMAKE_BUILD_TYPE=Debug ..
-ninja all
+ninja install
 ```
 
-This example assumes that you have [Ninja](https://ninja-build.org/) installed and that you want to generate debug information (based on `CMAKE_BUILD_TYPE`). Note that by default, installing the project (e.g. `ninja install`) will copy files into an `out/` directory under the CMake build directory.
+This example assumes that you have [Ninja](https://ninja-build.org/) installed and that you want to generate debug information (based on `CMAKE_BUILD_TYPE`). Note that by default, installing the project will copy files into an `out/` directory under the CMake build directory.
+
+Additionally, instead of directly invoking the specific build tool (Ninja, Make, etc.), you can run `cmake --build .` and `cmake --install .` in the build directory.
