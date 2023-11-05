@@ -2,7 +2,11 @@
 #include "platform.h"
 
 int Game::generate() {
-	return background_level_one.loadFromFile(level_one) ? EXIT_SUCCESS : EXIT_FAILURE;
+	if (!background_level_one.loadFromFile(level_one))
+		return EXIT_FAILURE;
+	// We want the background to have a pixelated look.
+	background_level_one.setSmooth(false);
+	return EXIT_SUCCESS;
 }
 
 #ifdef JEFFS_ADVENTURE_IS_DANIEL
