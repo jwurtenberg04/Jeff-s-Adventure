@@ -74,6 +74,7 @@ install(
 	# but not the entire `bin/` directory itself. We don't want an `out/bin/`.
 	DIRECTORY "bin/"
 	DESTINATION "${JEFF_INSTALL_PREFIX}"
+	PATTERN "bin/README.md" EXCLUDE
 )
 
 # Install the directories containing animation frames.
