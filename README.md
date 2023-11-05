@@ -24,4 +24,4 @@ ninja install
 
 This example assumes that you have [Ninja](https://ninja-build.org/) installed and that you want to generate debug information (based on `CMAKE_BUILD_TYPE`). Note that by default, installing the project will copy files into an `out/` directory under the CMake build directory.
 
-Additionally, instead of directly invoking the specific build tool (Ninja, Make, etc.), you can run `cmake --build .` and `cmake --install .` in the build directory.
+Additionally, instead of directly invoking the specific build tool (Ninja, Make, etc.), you can run `cmake --build .` and `cmake --install .` (or `cmake --build . --target install`) in the build directory.
