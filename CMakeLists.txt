@@ -72,6 +72,7 @@ install(
 	# installed directly under the installation directory.
 	DIRECTORY "bin/"
 	DESTINATION "${JEFF_INSTALL_PREFIX}"
+	PATTERN "bin/README.md" EXCLUDE
 )
 
 # Install the directories containing animation frames.
