@@ -8,26 +8,10 @@
 #include "Eraser.h"
 #include "Snippy.h"
 
-
-#include <string>
-#include <windows.h>
-
-std::string workingdir()
-{
-	char buf[256];
-	GetCurrentDirectoryA(256, buf);
-	return std::string(buf) + '\\';
-}
-
-
-
-
-
 int main() {
 	// We're not using physical units like meters, so instead of picking a value for gravity that
 	// matches the real world, we can pick whatever looks good. Also, 9.8 means 9.8 pixels per
 	// frame per frame, which makes Jeff move pretty fast after just a few frames.
-	std::cout << workingdir() << std::endl;
 	constexpr float gravity = 0.7f;
 	auto new_eraser = std::chrono::high_resolution_clock::now();
 	auto last_eraser = std::chrono::high_resolution_clock::now();
