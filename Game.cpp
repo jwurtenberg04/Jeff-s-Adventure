@@ -9,19 +9,6 @@ int Game::generate() {
 	return EXIT_SUCCESS;
 }
 
-#ifdef JEFFS_ADVENTURE_IS_DANIEL
-bool Game::collide_sprite(sf::Sprite a, sf::Sprite b) {
-	return a.getGlobalBounds().findIntersection(b.getGlobalBounds()).has_value();
-}
-
-bool Game::collide_shape(sf::Sprite a, sf::ConvexShape b) {
-	return a.getGlobalBounds().findIntersection(b.getGlobalBounds()).has_value();
-}
-
-bool Game::collide_rect_and_shape(sf::FloatRect rect, sf::ConvexShape shape) {
-	return rect.findIntersection(shape.getGlobalBounds()).has_value();
-}
-#else
 bool Game::collide_sprite(sf::Sprite a, sf::Sprite b) {
 	return a.getGlobalBounds().intersects(b.getGlobalBounds());
 }
@@ -33,7 +20,6 @@ bool Game::collide_shape(sf::Sprite a, sf::ConvexShape b) {
 bool Game::collide_rect_and_shape(sf::FloatRect rect, sf::ConvexShape shape) {
 	return rect.intersects(shape.getGlobalBounds());
 }
-#endif
 
 void Game::draw(sf::RenderWindow &window) {
 	sprite.setTexture(background_level_one);
