@@ -8,23 +8,7 @@
 #include "Eraser.h"
 #include "Snippy.h"
 
-
-#include <string>
-#include <windows.h>
-
-std::string workingdir()
-{
-	char buf[256];
-	GetCurrentDirectoryA(256, buf);
-	return std::string(buf) + '\\';
-}
-
-
-
-
-
 int main() {
-	std::cout << workingdir() << std::endl;
 	constexpr float gravity = 0.7f;
 	auto new_eraser = std::chrono::high_resolution_clock::now();
 	auto last_eraser = std::chrono::high_resolution_clock::now();
