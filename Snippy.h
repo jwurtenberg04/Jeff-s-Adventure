@@ -1,10 +1,11 @@
 #pragma once
+#include <filesystem>
 #include <SFML/Graphics.hpp>
 
 class Snippy
 {
 public:
-	int generate();
+	int generate(std::filesystem::path asset_dir);
 	void walk_right(sf::RenderWindow &window, float direction);
 	void walk_left(sf::RenderWindow &window, float direction);
 	void draw(sf::RenderWindow &window, sf::View &view, int &switch_control);

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <chrono>
+#include <filesystem>
 #include <SFML/Graphics.hpp>
 #include "Game.h"
 #include "Jeff.h"
@@ -9,6 +10,9 @@
 #include "Snippy.h"
 
 int main() {
+	auto asset_dir = std::filesystem::current_path();
+	std::cout << "Asset directory: " << asset_dir << '\n';
+
 	constexpr float gravity = 0.7f;
 	auto new_eraser = std::chrono::high_resolution_clock::now();
 	auto last_eraser = std::chrono::high_resolution_clock::now();
@@ -24,21 +28,21 @@ int main() {
 	Game game;
 
 	// Load all of the images and convert them to textures once.
-	if (jeff.generate() == EXIT_FAILURE) {
+	if (jeff.generate(asset_dir) == EXIT_FAILURE) {
 		std::cerr << "Could not load Jeff textures.\n";
 		return EXIT_FAILURE;
 	}
-	if (game.generate() == EXIT_FAILURE) {
+	if (game.generate(asset_dir) == EXIT_FAILURE) {
 		std::cerr << "Could not load global game textures.\n";
 		return EXIT_FAILURE;
 	}
 
 	std::vector<Eraser> erasers{};
-	if (!Eraser::load_texture()) {
+	if (!Eraser::load_texture(asset_dir)) {
 		std::cerr << "Could not load eraser texture.\n";
 		return EXIT_FAILURE;
 	}
-	if (snippy.generate() == EXIT_FAILURE) {
+	if (snippy.generate(asset_dir) == EXIT_FAILURE) {
 		std::cerr << "Could not load Snippy textures.\n";
 		return EXIT_FAILURE;
 	}

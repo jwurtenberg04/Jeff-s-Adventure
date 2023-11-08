@@ -1,10 +1,11 @@
 #pragma once
+#include <filesystem>
 #include <SFML/Graphics.hpp>
 
 class Game
 {
 public:
-	int generate();
+	int generate(std::filesystem::path asset_dir);
 	bool collide_sprite(sf::Sprite a, sf::Sprite b);
 	bool collide_shape(sf::Sprite a, sf::ConvexShape b);
 	bool collide_rect_and_shape(sf::FloatRect rect, sf::ConvexShape shape);
