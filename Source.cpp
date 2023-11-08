@@ -107,8 +107,11 @@ int main() {
 		// Update Jeff's y position before handling collisions and drawing.
 		jeff.update_y();
 
-		bool collide_floor = game.collide_rect_and_shape(jeff.global_bounds(), game.floor);
-		if (collide_floor) {
+		if (snippy_alive && game.collide_sprite(jeff.sprite, snippy.sprite)) {
+			jeff.pos_x = 250.0f;
+		}
+		
+		if (game.collide_rect_and_shape(jeff.global_bounds(), game.floor);) {
 			// Move Jeff before the top of the floor. I added 1 because Jeff jitters without it. I
 			// think Jeff was alternating between being every so slightly above the floor and
 			// falling into the floor because of gravity. Adding 1 keeps Jeff in the floor so the
@@ -139,6 +142,20 @@ int main() {
 			eraser.move();
 			eraser.draw(window);
 		}
+		
+		if (jeff.pos_x < snippy.pos_x) {
+			snippy.walk_left(window);
+			snippy_switch_control = 2;
+		}
+		else {
+			snippy.walk_right(window);
+			snippy_switch_control = 1;
+		}
+
+		if (snippy_alive) {
+			snippy.draw(window, view, snippy_switch_control);
+		}
+		
 		jeff.draw(window, view, switch_control, j_attack);
 		window.display();
 	}
