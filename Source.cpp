@@ -1,3 +1,8 @@
+#define NOMINMAX
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <cassert>
+#include <iomanip>
 #include <iostream>
 #include <chrono>
 #include <filesystem>
@@ -9,8 +14,22 @@
 #include "Eraser.h"
 #include "Snippy.h"
 
+namespace filesystem = std::filesystem;
+
+// To find the asset directory, we start at the directory containing the
+// executable and go upwards until we find this test file.
+static const char* asset_test_path = "Snippy-1.png";
+
+// Return the absolute path to the directory containing all of the assets.
+// Return an empty path if the asset directory could not be found.
+static filesystem::path find_asset_directory();
+
 int main() {
-	auto asset_dir = std::filesystem::current_path();
+	auto asset_dir = find_asset_directory();
+	if (asset_dir.empty()) {
+		std::cerr << "Could not find the asset directory\n";
+		return 1;
+	}
 	std::cout << "Asset directory: " << asset_dir << '\n';
 
 	// We're not using physical units like meters, so instead of picking a value for gravity that
@@ -125,4 +144,62 @@ int main() {
 	}
 
 	return EXIT_SUCCESS;
+}
+
+// Return the absolute path to the main executable file.
+static filesystem::path get_executable_path() {
+	// Begin with a reasonably-sized buffer.
+	std::vector<wchar_t> buffer(150);
+	while (true) {
+		// For `GetModuleFileNameW`, `NULL` represents the current process.
+		const HMODULE current_process = NULL;
+		const DWORD length_excluding_null = GetModuleFileNameW(current_process, buffer.data(), buffer.size());
+		const DWORD error = GetLastError();
+		if (length_excluding_null == 0) {
+			std::cerr << "Cannot get path to main executable file: Win32 error ";
+			std::cerr << std::setfill('0') << std::setw(8) << std::hex << std::uppercase;
+			std::cerr << error << '\n';
+			std::exit(1);
+		}
+		// Check if the buffer was big enough. If the length (excluding the null
+		// byte) is equal to the buffer's size, the path was truncated.
+		if (error == ERROR_INSUFFICIENT_BUFFER || length_excluding_null == buffer.size()) {
+			buffer.resize(buffer.size() * 2);
+			continue;
+		}
+		// The buffer was big enough.
+		// The length must not exceed the buffer's size.
+		assert(length_excluding_null < buffer.size());
+		// The buffer must be null terminated.
+		assert(buffer.at(length_excluding_null) == '\0');
+		break;
+	}
+	filesystem::path path { &buffer.at(0) };
+	assert(path.is_absolute());
+	return path;
+}
+
+static filesystem::path find_asset_directory() {
+	auto current_dir = get_executable_path();
+	// Get the path to the *directory containing* the executable.
+	current_dir = current_dir.parent_path();
+	// Keep going up until we find the assets.
+	while (!current_dir.empty()) {
+		// If we've found the test file, we're done!
+		if (filesystem::exists(current_dir / asset_test_path))
+			return current_dir;
+		// Additionally, check any "SFML" subdirectories.
+		// This ensures that the assets can be found on both my computer and Josh's computer.
+		if (filesystem::exists(current_dir / "SFML" / asset_test_path))
+			return current_dir / "SFML";
+		// We couldn't find it here, so go up.
+		if (current_dir.has_parent_path() && current_dir.has_relative_path()) {
+			current_dir = current_dir.parent_path();
+		} else {
+			// We can't go up anymore, meaning we couldn't find the assets.
+			// Return an empty path to indicate failure.
+			return {};
+		}
+	}
+	return current_dir;
 }
