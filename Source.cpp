@@ -1,5 +1,6 @@
 #include <iostream>
 #include <chrono>
+#include <filesystem>
 #include <SFML/Graphics.hpp>
 #include "Game.h"
 #include "Jeff.h"
@@ -9,6 +10,9 @@
 #include "Snippy.h"
 
 int main() {
+	auto asset_dir = std::filesystem::current_path();
+	std::cout << "Asset directory: " << asset_dir << '\n';
+
 	// We're not using physical units like meters, so instead of picking a value for gravity that
 	// matches the real world, we can pick whatever looks good. Also, 9.8 means 9.8 pixels per
 	// frame per frame, which makes Jeff move pretty fast after just a few frames.
@@ -27,22 +31,22 @@ int main() {
 	Game game;
 
 	// Load all of the images and convert them to textures once.
-	
-	if (jeff.generate() == EXIT_FAILURE) {
+
+	if (jeff.generate(asset_dir) == EXIT_FAILURE) {
 		std::cout << "Could not load textures for Jeff player1 character.\n";
 		return EXIT_FAILURE;
 	}
-	if (game.generate() == EXIT_FAILURE) {
+	if (game.generate(asset_dir) == EXIT_FAILURE) {
 		std::cout << "Could not load textures for game.\n";
 		return EXIT_FAILURE;
 	}
 
 	std::vector<Eraser> erasers{};
-	if (!Eraser::load_texture()) {
+	if (!Eraser::load_texture(asset_dir)) {
 		std::cout << "Could not load eraser texture.\n";
 		return EXIT_FAILURE;
 	}
-	if (snippy.generate() == EXIT_FAILURE) {
+	if (snippy.generate(asset_dir) == EXIT_FAILURE) {
 		std::cout << "Could not load textures for snippy. \n";
 		return EXIT_FAILURE;
 	}
