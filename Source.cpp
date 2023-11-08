@@ -102,8 +102,11 @@ int main() {
 		// Update Jeff's position before handling collisions and rendering.
 		jeff.update_y();
 
-		bool collide_floor = game.collide_rect_and_shape(jeff.global_bounds(), game.floor);
-		if (collide_floor) {
+		if (snippy_alive && game.collide_sprite(jeff.sprite, snippy.sprite)) {
+			jeff.pos_x = 250.0f;
+		}
+
+		if (game.collide_rect_and_shape(jeff.global_bounds(), game.floor);) {
 			// Move Jeff to the top of the floor.
 			jeff.pos_y = game.floor.getGlobalBounds().top - jeff.global_bounds().height + 1;
 			// If the player is pressing the space key, then Jeff should jump.
@@ -135,6 +138,19 @@ int main() {
 			eraser.move();
 			eraser.draw(window);
 		}
+
+		if (jeff.pos_x < snippy.pos_x) {
+			snippy.walk_left(window);
+			snippy_switch_control = 2;
+		} else {
+			snippy.walk_right(window);
+			snippy_switch_control = 1;
+		}
+
+		if (snippy_alive) {
+			snippy.draw(window, view, snippy_switch_control);
+		}
+
 		jeff.draw(window, view, switch_control, j_attack);
 		window.display();
 	}
