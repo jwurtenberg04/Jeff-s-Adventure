@@ -6,13 +6,13 @@ int Snippy::generate() {
 		std::cout << "Could not load Snippy-1.png. \n";
 		return EXIT_FAILURE;
 	}
-	for (int i = 0; i < std::size(snippyRight); i++) {
+	for (std::size_t i = 0; i < std::size(snippyRight); i++) {
 		if (!snippyRightTextures[i].loadFromFile(snippyRight[i])) {
 			std::cout << "Could not load: " << snippyRight[i] << "\n";
 			return EXIT_FAILURE;
 		}
 	}
-	for (int i = 0; i < std::size(snippyLeft); i++) {
+	for (std::size_t i = 0; i < std::size(snippyLeft); i++) {
 		if (!snippyLeftTextures[i].loadFromFile(snippyLeft[i])) {
 			std::cout << "Could not load: " << snippyLeft[i] << "\n";
 			return EXIT_FAILURE;
@@ -38,7 +38,7 @@ void Snippy::draw(sf::RenderWindow &window, sf::View &view, int switch_control) 
 		break;
 	}
 	}
-	
+
 }
 
 void Snippy::walk_right(sf::RenderWindow &window) {

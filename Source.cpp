@@ -111,7 +111,7 @@ int main() {
 			jeff.pos_x = 250.0f;
 		}
 		
-		if (game.collide_rect_and_shape(jeff.global_bounds(), game.floor);) {
+		if (game.collide_rect_and_shape(jeff.global_bounds(), game.floor)) {
 			// Move Jeff before the top of the floor. I added 1 because Jeff jitters without it. I
 			// think Jeff was alternating between being every so slightly above the floor and
 			// falling into the floor because of gravity. Adding 1 keeps Jeff in the floor so the
