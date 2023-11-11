@@ -1,20 +1,22 @@
 #include "Snippy.h"
 #include <iostream>
 
-int Snippy::generate() {
-	if (!snippyIdleRight.loadFromFile("Snippy/Snippy-Right00.png")) {
+int Snippy::generate(std::filesystem::path asset_dir) {
+	if (!snippyIdleRight.loadFromFile((asset_dir / "Snippy/Snippy-Right00.png").string())) {
 		std::cout << "Could not load Snippy-1.png. \n";
 		return EXIT_FAILURE;
 	}
 	for (std::size_t i = 0; i < std::size(snippyRight); i++) {
-		if (!snippyRightTextures[i].loadFromFile(snippyRight[i])) {
-			std::cout << "Could not load: " << snippyRight[i] << "\n";
+		auto path = asset_dir / snippyRight[i];
+		if (!snippyRightTextures[i].loadFromFile(path.string())) {
+			std::cout << "Could not load: " << path.string() << "\n";
 			return EXIT_FAILURE;
 		}
 	}
 	for (std::size_t i = 0; i < std::size(snippyLeft); i++) {
-		if (!snippyLeftTextures[i].loadFromFile(snippyLeft[i])) {
-			std::cout << "Could not load: " << snippyLeft[i] << "\n";
+		auto path = asset_dir / snippyLeft[i];
+		if (!snippyLeftTextures[i].loadFromFile(path.string())) {
+			std::cout << "Could not load: " << path << "\n";
 			return EXIT_FAILURE;
 		}
 	}
