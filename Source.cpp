@@ -106,7 +106,7 @@ int main() {
 			jeff.pos_x = 250.0f;
 		}
 
-		if (game.collide_rect_and_shape(jeff.global_bounds(), game.floor);) {
+		if (game.collide_rect_and_shape(jeff.global_bounds(), game.floor)) {
 			// Move Jeff to the top of the floor.
 			jeff.pos_y = game.floor.getGlobalBounds().top - jeff.global_bounds().height + 1;
 			// If the player is pressing the space key, then Jeff should jump.

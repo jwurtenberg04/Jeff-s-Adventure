@@ -6,13 +6,13 @@ int Snippy::generate() {
 		std::cerr << "Could not load Snippy-1.png.\n";
 		return EXIT_FAILURE;
 	}
-	for (int i = 0; i < std::size(snippyRight); i++) {
+	for (std::size_t i = 0; i < std::size(snippyRight); i++) {
 		if (!snippyRightTextures[i].loadFromFile(snippyRight[i])) {
 			std::cerr << "Could not load: " << snippyRight[i] << "\n";
 			return EXIT_FAILURE;
 		}
 	}
-	for (int i = 0; i < std::size(snippyLeft); i++) {
+	for (std::size_t i = 0; i < std::size(snippyLeft); i++) {
 		if (!snippyLeftTextures[i].loadFromFile(snippyLeft[i])) {
 			std::cerr << "Could not load: " << snippyLeft[i] << "\n";
 			return EXIT_FAILURE;
