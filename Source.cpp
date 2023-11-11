@@ -110,7 +110,7 @@ int main() {
 		if (snippy_alive && game.collide_sprite(jeff.sprite, snippy.sprite)) {
 			jeff.pos_x = 250.0f;
 		}
-		
+
 		if (game.collide_rect_and_shape(jeff.global_bounds(), game.floor)) {
 			// Move Jeff before the top of the floor. I added 1 because Jeff jitters without it. I
 			// think Jeff was alternating between being every so slightly above the floor and
@@ -142,7 +142,7 @@ int main() {
 			eraser.move();
 			eraser.draw(window);
 		}
-		
+
 		if (jeff.pos_x < snippy.pos_x) {
 			snippy.walk_left(window);
 			snippy_switch_control = 2;
@@ -155,7 +155,7 @@ int main() {
 		if (snippy_alive) {
 			snippy.draw(window, view, snippy_switch_control);
 		}
-		
+
 		jeff.draw(window, view, switch_control, j_attack);
 		window.display();
 	}
