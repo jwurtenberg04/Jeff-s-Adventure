@@ -45,6 +45,8 @@ int main() {
 	Snippy snippy;
 	Jeff jeff;
 	Game game;
+	int snippy_switch_control = 2;
+	bool snippy_alive = true;
 
 	// Load all of the images and convert them to textures once.
 	if (jeff.generate(asset_dir) == EXIT_FAILURE) {
