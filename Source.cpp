@@ -24,6 +24,8 @@ static const char* test_asset_path = "Snippy-1.png";
 // Return an empty path if the asset directory could not be found.
 static filesystem::path find_asset_dir();
 
+static const float view_height = 800;
+
 int main() {
 	auto asset_dir = find_asset_dir();
 	if (asset_dir.empty()) {
@@ -37,10 +39,9 @@ int main() {
 	int switch_control = 1;
 	bool j_attack;
 	sf::RenderWindow window;
-	window.create(sf::VideoMode(1000, 800), "Jeff's Adventure!");
+	window.create(sf::VideoMode(1000, view_height), "Jeff's Adventure!");
 	window.setFramerateLimit(60);
 	sf::View view;
-	view.setSize(sf::Vector2f(1500, 800));
 	Snippy snippy;
 	Jeff jeff;
 	Game game;
@@ -112,7 +113,10 @@ int main() {
 
 		sf::Color background_color{ 120, 75, 45 };
 		window.clear(background_color);
-		view.setCenter(sf::Vector2f(jeff.pos_x + 500, 395));
+		const auto window_size = sf::Vector2f { window.getSize() };
+		const float width = window_size.x / window_size.y * view_height;
+		view.setSize(sf::Vector2f { width, view_height });
+		view.setCenter(sf::Vector2f { jeff.pos_x + width / 2.0f, 395.0f });
 		window.setView(view);
 		game.draw(window);
 		game.draw_debug(window);
