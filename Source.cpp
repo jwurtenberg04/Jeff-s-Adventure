@@ -76,6 +76,11 @@ int main() {
 				window.close();
 		}
 
+		if (!window.hasFocus()) {
+			window.display();
+			continue;
+		}
+
 		j_attack = false;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			window.close();
