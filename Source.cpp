@@ -24,7 +24,26 @@ static const char* test_asset_path = "Snippy-1.png";
 // Return an empty path if the asset directory could not be found.
 static filesystem::path find_asset_dir();
 
-static const float view_height = 800;
+static const int view_height = 800;
+
+static void create_window(sf::Window& window, bool in_fullscreen = false) {
+	// Default settings for Jeff's Adventure:
+	sf::VideoMode video_mode(1'000, view_height);
+	sf::Uint32 style = sf::Style::Default;
+	if (in_fullscreen) {
+		auto fullscreen_modes = sf::VideoMode::getFullscreenModes();
+		if (fullscreen_modes.empty()) {
+			// Fullscreen is not supported.
+			// Fallback to default settings.
+		} else {
+			// Pick the best video mode (always at index 0).
+			video_mode = fullscreen_modes.at(0);
+			style = sf::Style::Fullscreen;
+		}
+	}
+	window.create(video_mode, "Jeff's Adventure!", style);
+	window.setFramerateLimit(60);
+}
 
 int main() {
 	auto asset_dir = find_asset_dir();
@@ -38,9 +57,10 @@ int main() {
 	auto last_eraser = std::chrono::high_resolution_clock::now();
 	int switch_control = 1;
 	bool j_attack;
+	bool in_fullscreen = false;
+	bool f_key_previously_pressed = false;
 	sf::RenderWindow window;
-	window.create(sf::VideoMode(1000, view_height), "Jeff's Adventure!");
-	window.setFramerateLimit(60);
+	create_window(window);
 	sf::View view;
 	Snippy snippy;
 	Jeff jeff;
@@ -71,8 +91,30 @@ int main() {
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed)
+			switch (event.type) {
+			case sf::Event::Closed:
 				window.close();
+				break;
+			case sf::Event::KeyPressed: {
+				auto key = event.key;
+				if (key.code == sf::Keyboard::F) {
+					bool control = !key.alt && key.control && !key.shift && !key.system;
+					// Ignore repeated key presses.
+					if (!f_key_previously_pressed && control) {
+						in_fullscreen = !in_fullscreen;
+						create_window(window, in_fullscreen);
+					}
+					f_key_previously_pressed = true;
+				}
+				break;
+			}
+			case sf::Event::KeyReleased:
+				if (event.key.code == sf::Keyboard::F)
+					f_key_previously_pressed = false;
+				break;
+			default:
+				break;
+			}
 		}
 
 		if (!window.hasFocus()) {
