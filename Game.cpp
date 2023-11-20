@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "platform.h"
+#include "Platform.h"
 
 int Game::generate(std::filesystem::path asset_dir) {
 	if (!background_level_one.loadFromFile((asset_dir / level_one).string()))
