@@ -8,7 +8,6 @@ public:
 	int generate(std::filesystem::path asset_dir);
 	void draw(sf::RenderWindow &window);
 	static bool collide_sprite(sf::Sprite a, sf::Sprite b);
-	bool collide_shape(sf::Sprite a, sf::ConvexShape b);
 	bool collide_rect_and_shape(sf::FloatRect rect, sf::ConvexShape shape);
 	sf::ConvexShape floor;
 	sf::ConvexShape wall_1;
