@@ -13,10 +13,6 @@ bool Game::collide_sprite(sf::Sprite a, sf::Sprite b) {
 	return a.getGlobalBounds().intersects(b.getGlobalBounds());
 }
 
-bool Game::collide_shape(sf::Sprite a, sf::ConvexShape b) {
-	return a.getGlobalBounds().intersects(b.getGlobalBounds());
-}
-
 bool Game::collide_rect_and_shape(sf::FloatRect rect, sf::ConvexShape shape) {
 	return rect.intersects(shape.getGlobalBounds());
 }
