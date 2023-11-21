@@ -32,9 +32,6 @@ int main() {
 	}
 	std::cout << "Asset directory: " << asset_dir << '\n';
 
-	// We're not using physical units like meters, so instead of picking a value for gravity that
-	// matches the real world, we can pick whatever looks good. Also, 9.8 means 9.8 pixels per
-	// frame per frame, which makes Jeff move pretty fast after just a few frames.
 	auto new_eraser = std::chrono::high_resolution_clock::now();
 	auto last_eraser = std::chrono::high_resolution_clock::now();
 	int switch_control = 1;

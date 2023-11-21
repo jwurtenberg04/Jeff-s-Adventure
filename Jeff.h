@@ -19,6 +19,9 @@ public:
 	float pos_y = 395.0f;
 	float velocity_y = 0.0f;
 	static constexpr float walk_speed = 5.0f;
+	// We're not using physical units like meters, so instead of picking a value for gravity that
+	// matches the real world, we can pick whatever looks good. Also, 9.8 means 9.8 pixels per
+	// frame per frame, which makes Jeff move pretty fast after just a few frames.
 	static constexpr float gravity = 0.7f;
 	float jeff_jump_strength = 17.0f;
 	sf::Sprite sprite;
@@ -145,11 +148,6 @@ private:
 		"jeff_shooting/jeff_shooting_39.png", "jeff_shooting/jeff_shooting_40.png", "jeff_shooting/jeff_shooting_41.png",
 		"jeff_shooting/jeff_shooting_42.png", "jeff_shooting/jeff_shooting_43.png"
 	};
-
-	// Make sure that each frame of animation has a corresponding finger position.
-	// "static_assert" checks these conditions at compile time instead of at run time.
-	//static_assert(std::size(jeff_walking) == std::size(finger_walk_right);
-	//static_assert(std::size(jeff_walking_left) == std::size(finger_walk_left));
 
 	sf::Texture jeff_standing_texture;
 	sf::Texture jeff_standing_left_texture;
