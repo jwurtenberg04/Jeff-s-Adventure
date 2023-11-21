@@ -22,9 +22,6 @@ void Game::draw(sf::RenderWindow &window) {
 	window.draw(sprite);
 
 	sf::Color blue{ 0, 0, 255 };
-	Platform pl1(520, 520, 960, 520);
-	Platform pl2(3260, 520, 3650, 520);
-	Platform pl3(7100, 520, 7560, 520);
 	floor.setPointCount(4);
 	floor.setPoint(0, sf::Vector2f(0, 695));
 	floor.setPoint(1, sf::Vector2f(0, 720));
