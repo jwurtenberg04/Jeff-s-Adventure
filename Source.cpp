@@ -32,7 +32,6 @@ int main() {
 	}
 	std::cout << "Asset directory: " << asset_dir << '\n';
 
-	constexpr float gravity = 0.7f;
 	auto new_eraser = std::chrono::high_resolution_clock::now();
 	auto last_eraser = std::chrono::high_resolution_clock::now();
 	int switch_control = 1;
@@ -67,6 +66,7 @@ int main() {
 		std::cerr << "Could not load Snippy textures.\n";
 		return EXIT_FAILURE;
 	}
+	game.init_level();
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
@@ -108,28 +108,7 @@ int main() {
 			jeff.pos_x = 250.0f;
 		}
 
-		if (game.collide_rect_and_shape(jeff.global_bounds(), game.floor)) {
-			// Move Jeff to the top of the floor.
-			jeff.pos_y = game.floor.getGlobalBounds().top - jeff.global_bounds().height + 1;
-			// If the player is pressing the space key, then Jeff should jump.
-			// Else, prevent Jeff from falling into the floor.
-			bool pressing_space = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
-			jeff.velocity_y = pressing_space ? -jeff.jeff_jump_strength : 0.0f;
-		} else {
-			jeff.velocity_y += gravity;
-		}
-
-		if (game.collide_rect_and_shape(jeff.global_bounds(), game.wall_1)) {
-			const auto bounds = game.wall_1.getGlobalBounds();
-			// Move Jeff to the right edge of the wall.
-			jeff.pos_x = bounds.left + bounds.width;
-		}
-
-		if (game.collide_rect_and_shape(jeff.global_bounds(), game.wall_2)) {
-			const auto bounds = game.wall_2.getGlobalBounds();
-			// Move Jeff to the left edge of the wall.
-			jeff.pos_x = bounds.left - jeff.global_bounds().width;
-		}
+		game.collide_jeff(jeff);
 
 		sf::Color background_color{ 120, 75, 45 };
 		window.clear(background_color);

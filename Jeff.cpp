@@ -83,5 +83,6 @@ sf::FloatRect Jeff::global_bounds() {
 }
 
 void Jeff::update_y() {
+	velocity_y += gravity;
 	pos_y += velocity_y;
 }
