@@ -110,7 +110,7 @@ int main() {
 		jeff.update_y();
 
 		if (snippy_alive && game.collide_sprite(jeff.sprite, snippy.sprite)) {
-			jeff.pos_x = 250.0f;
+			jeff.pos_x = 150.0f;
 		}
 
 		game.collide_jeff(jeff);

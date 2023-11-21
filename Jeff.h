@@ -15,7 +15,7 @@ public:
 	void update_y();
 	float ePos_x;
 	float ePos_y;
-	float pos_x = 250.0f;
+	float pos_x = 150.0f;
 	float pos_y = 395.0f;
 	float velocity_y = 0.0f;
 	static constexpr float walk_speed = 5.0f;
