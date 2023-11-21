@@ -75,6 +75,17 @@ void Jeff::draw(sf::RenderWindow &window, sf::View &view, int &switch_control, b
 	}
 }
 
+void Jeff::draw_debug(sf::RenderWindow &window) {
+	auto bounds = global_bounds();
+	sf::RectangleShape shape;
+	shape.setPosition(bounds.getPosition());
+	shape.setSize(bounds.getSize());
+	shape.setOutlineThickness(4.0f);
+	shape.setOutlineColor(sf::Color::Magenta);
+	shape.setFillColor(sf::Color::Transparent);
+	window.draw(shape);
+}
+
 sf::FloatRect Jeff::global_bounds() {
 	auto global_bounds = sprite.getGlobalBounds();
 	global_bounds.left = pos_x;

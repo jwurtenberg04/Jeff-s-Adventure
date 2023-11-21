@@ -9,6 +9,7 @@ public:
 	void walk_right(sf::RenderWindow &window, float direction);
 	void walk_left(sf::RenderWindow &window, float direction);
 	void draw(sf::RenderWindow &window, sf::View &view, int &switch_control, bool &j_attack);
+	void draw_debug(sf::RenderWindow &window);
 	void j_attack(sf::RenderWindow &window);
 	sf::FloatRect global_bounds();
 	void update_y();
