@@ -27,6 +27,7 @@ void Game::init_level() {
 	platforms.push_back({ { 0, 695 }, { 10'000, 25 }, sf::Color::Red }); // Floor
 	platforms.push_back({ { -40, 0 }, { 40, 720 }, sf::Color::Green }); // Wall 1
 	platforms.push_back({ { 10'000, 0 }, { 40, 720 }, sf::Color::Blue }); // Wall 2
+	platforms.push_back({ { 500, 500 }, { 440, 25 }, sf::Color::Cyan });
 }
 
 void Game::collide_jeff(Jeff& jeff) {
