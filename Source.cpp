@@ -120,6 +120,7 @@ int main() {
 		view.setCenter(sf::Vector2f(jeff.pos_x + 500, 395));
 		window.setView(view);
 		game.draw(window);
+		game.draw_debug(window);
 		for (auto &eraser : erasers) {
 			eraser.move();
 			eraser.draw(window);
@@ -139,6 +140,7 @@ int main() {
 		}
 
 		jeff.draw(window, view, switch_control, j_attack);
+		jeff.draw_debug(window);
 		window.display();
 	}
 

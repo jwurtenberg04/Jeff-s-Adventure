@@ -10,6 +10,7 @@ class Game
 public:
 	int generate(std::filesystem::path asset_dir);
 	void draw(sf::RenderWindow &window);
+	void draw_debug(sf::RenderWindow &window);
 	void init_level();
 	static bool collide_sprite(sf::Sprite a, sf::Sprite b);
 	void collide_jeff(Jeff& jeff);

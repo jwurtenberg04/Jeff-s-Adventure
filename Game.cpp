@@ -17,6 +17,11 @@ void Game::draw(sf::RenderWindow &window) {
 	window.draw(sprite);
 }
 
+void Game::draw_debug(sf::RenderWindow &window) {
+	for (const auto& platform : platforms)
+		platform.draw(window);
+}
+
 void Game::init_level() {
 	platforms.push_back({ { 0, 695 }, { 10'000, 25 }, sf::Color::Red }); // Floor
 	platforms.push_back({ { -40, 0 }, { 285, 420 }, sf::Color::Green }); // Wall 1
