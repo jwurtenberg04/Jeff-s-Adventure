@@ -18,6 +18,7 @@ public:
 	float pos_y = 395.0f;
 	float velocity_y = 0.0f;
 	static constexpr float walk_speed = 5.0f;
+	static constexpr float gravity = 0.7f;
 	float jeff_jump_strength = 17.0f;
 	sf::Sprite sprite;
 

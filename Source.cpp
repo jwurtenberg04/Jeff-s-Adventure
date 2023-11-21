@@ -35,7 +35,6 @@ int main() {
 	// We're not using physical units like meters, so instead of picking a value for gravity that
 	// matches the real world, we can pick whatever looks good. Also, 9.8 means 9.8 pixels per
 	// frame per frame, which makes Jeff move pretty fast after just a few frames.
-	constexpr float gravity = 0.7f;
 	auto new_eraser = std::chrono::high_resolution_clock::now();
 	auto last_eraser = std::chrono::high_resolution_clock::now();
 	int switch_control = 1;
@@ -71,6 +70,7 @@ int main() {
 		std::cout << "Could not load textures for snippy. \n";
 		return EXIT_FAILURE;
 	}
+	game.init_level();
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
@@ -113,27 +113,7 @@ int main() {
 			jeff.pos_x = 250.0f;
 		}
 
-		if (game.collide_rect_and_shape(jeff.global_bounds(), game.floor)) {
-			// Move Jeff before the top of the floor. I added 1 because Jeff jitters without it. I
-			// think Jeff was alternating between being every so slightly above the floor and
-			// falling into the floor because of gravity. Adding 1 keeps Jeff in the floor so the
-			// game doesn't try to push him further into the floor, eliminating the jittering.
-			jeff.pos_y = game.floor.getGlobalBounds().top - jeff.global_bounds().height + 1;
-			// Jeff is on the floor. If the player is pressing the space key, then Jeff should jump.
-			// Otherwise Jeff is on the floor and shouldn't fall into it.
-			jeff.velocity_y = sf::Keyboard::isKeyPressed(sf::Keyboard::Space) ? -jeff.jeff_jump_strength : 0;
-		} else {
-			jeff.velocity_y += gravity;
-		}
-
-		if (game.collide_rect_and_shape(jeff.global_bounds(), game.wall_1)) {
-			const auto bounds = game.wall_1.getGlobalBounds();
-			jeff.pos_x = bounds.left + bounds.width; // Move Jeff to the right edge of the wall.
-		}
-		if (game.collide_rect_and_shape(jeff.global_bounds(), game.wall_2)) {
-			const auto bounds = game.wall_2.getGlobalBounds();
-			jeff.pos_x = bounds.left - jeff.global_bounds().width; // Move Jeff before the left edge of the wall.
-		}
+		game.collide_jeff(jeff);
 
 		sf::Color background_color{ 120, 75, 45 };
 		window.clear(background_color);
