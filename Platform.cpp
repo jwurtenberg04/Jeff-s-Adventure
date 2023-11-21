@@ -1,41 +1,41 @@
 #include "Platform.h"
 
-Platform::Platform(int x1, int y1, int x2, int y2) {
-	platform.setPointCount(2);
-	platform.setPoint(1, sf::Vector2f(x1, y1));
-	platform.setPoint(2, sf::Vector2f(x2, y2));
-}
-Platform::Platform(int x1, int y1, int x2, int y2, int x3, int y3) {
-	platform.setPointCount(3);
-	platform.setPoint(1, sf::Vector2f(x1, y1));
-	platform.setPoint(2, sf::Vector2f(x2, y2));
-	platform.setPoint(3, sf::Vector2f(x3, y3));
-}
-Platform::Platform(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) {
-	platform.setPointCount(4);
-	platform.setPoint(1, sf::Vector2f(x1, y1));
-	platform.setPoint(2, sf::Vector2f(x2, y2));
-	platform.setPoint(3, sf::Vector2f(x3, y3));
-	platform.setPoint(4, sf::Vector2f(x4, y4));
-}
-Platform::Platform(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int x5, int y5) {
-	platform.setPointCount(5);
-	platform.setPoint(1, sf::Vector2f(x1, y1));
-	platform.setPoint(2, sf::Vector2f(x2, y2));
-	platform.setPoint(3, sf::Vector2f(x3, y3));
-	platform.setPoint(4, sf::Vector2f(x4, y4));
-	platform.setPoint(5, sf::Vector2f(x5, y5));
-}
-Platform::Platform(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int x5, int y5, int x6, int y6) {
-	platform.setPointCount(6);
-	platform.setPoint(1, sf::Vector2f(x1, y1));
-	platform.setPoint(2, sf::Vector2f(x2, y2));
-	platform.setPoint(3, sf::Vector2f(x3, y3));
-	platform.setPoint(4, sf::Vector2f(x4, y4));
-	platform.setPoint(5, sf::Vector2f(x5, y5));
-	platform.setPoint(6, sf::Vector2f(x6, y6));
+Platform::Platform(sf::Vector2f corner, sf::Vector2f size, sf::Color color) {
+	rectangle.setPosition(corner);
+	rectangle.setSize(size);
+	rectangle.setOutlineThickness(4.0f);
+	set_color(color);
 }
 
-bool Platform::collide(sf::Sprite a, sf::ConvexShape b) {
-	return a.getGlobalBounds().intersects(b.getGlobalBounds());
+void Platform::set_color(sf::Color color) {
+	rectangle.setOutlineColor(color);
+	// Make the fill color partially transparent.
+	rectangle.setFillColor({ color.r, color.g, color.b, 100 });
+}
+
+void Platform::draw(sf::RenderWindow& window) const {
+	window.draw(rectangle);
+}
+
+std::optional<Collision> Platform::collide(const sf::FloatRect& other) const {
+	sf::FloatRect overlap;
+	if (!rectangle.getGlobalBounds().intersects(other, overlap)) {
+		// No overlap:
+		return std::nullopt;
+	}
+	// Just use position to guess the direction of the collision.
+	const auto center = rectangle.getPosition() + rectangle.getSize() / 2.0f;
+	const auto other_center = other.getPosition() + other.getSize() / 2.0f;
+	Direction direction;
+	if (overlap.width < overlap.height) {
+		// If there is less horizontal overlap than vertical overlap,
+		// consider this collision to be horizontal.
+		bool from_left = other_center.x < center.x;
+		direction = from_left ? Direction::left : Direction::right;
+	} else {
+		// Otherwise, consider this collision to be vertical.
+		bool from_top = other_center.y < center.y;
+		direction = from_top ? Direction::top : Direction::bottom;
+	}
+	return Collision{ overlap, direction };
 }
