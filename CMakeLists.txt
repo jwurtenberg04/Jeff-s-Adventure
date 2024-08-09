@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.25)
 project(jeffs-adventure CXX)
 
 set(JEFF_DEFAULT_BUILD_TYPE "Debug")
-set(JEFF_INSTALL_PREFIX "out")
 
 # Source: https://www.kitware.com/cmake-and-the-default-build-type/
 # Set the build type if it was not specified (only in single-config generators).
@@ -13,7 +12,7 @@ endif()
 
 # By default, install Jeff's Adventure into the build directory.
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-	set_property(CACHE CMAKE_INSTALL_PREFIX PROPERTY VALUE "${CMAKE_BINARY_DIR}")
+	set_property(CACHE CMAKE_INSTALL_PREFIX PROPERTY VALUE "${CMAKE_BINARY_DIR}/out")
 endif()
 
 # Let users enable colored diagnostics (e.g. compiler errors, warnings).
@@ -47,6 +46,7 @@ target_link_directories(jeffs-adventure PRIVATE bin lib)
 target_include_directories(jeffs-adventure PRIVATE include)
 
 # We want to link with SFML's audio, graphics, windowing, and system libraries.
+# NOTE: Link dependencies after dependents e.g. `sfml-system` after `sfml-window`.
 target_link_libraries(jeffs-adventure PRIVATE
 	sfml-audio sfml-graphics sfml-window sfml-system
 )
@@ -64,8 +64,8 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR "${CMAKE_CXX_COMPILER_ID}" STREQ
 	target_compile_options(jeffs-adventure PRIVATE $<$<CONFIG:Debug>:-g3 -fsanitize-trap=undefined>)
 endif()
 
-# Install the main executable.
-install(TARGETS jeffs-adventure DESTINATION "${JEFF_INSTALL_PREFIX}")
+# Install the main executable directly inside the installation directory.
+install(TARGETS jeffs-adventure DESTINATION ".")
 
 # NOTE: "Directory names given as relative paths are interpreted wrt the current source directory."
 # Source: https://cmake.org/cmake/help/latest/command/install.html#directory
@@ -73,14 +73,14 @@ install(
 	# The final forward slash ensures that the contents of `bin/` are installed,
 	# but not the entire `bin/` directory itself. We don't want an `out/bin/`.
 	DIRECTORY "bin/"
-	DESTINATION "${JEFF_INSTALL_PREFIX}"
+	DESTINATION "."
 	PATTERN "bin/README.md" EXCLUDE
 )
 
 # Install the directories containing animation frames.
 install(
 	DIRECTORY "jeff_shooting" "jeff-walking" "Snippy"
-	DESTINATION "${JEFF_INSTALL_PREFIX}"
+	DESTINATION "."
 )
 
 # NOTE: "File names given as relative paths are interpreted wrt the current source directory."
@@ -92,5 +92,5 @@ install(FILES
 	"jeff's-adventure-background-1.png"
 	"mouseCursor.png"
 	"Snippy-1.png"
-	DESTINATION "${JEFF_INSTALL_PREFIX}"
+	DESTINATION "."
 )
