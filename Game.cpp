@@ -10,7 +10,7 @@ int Game::generate(std::filesystem::path asset_dir) {
 }
 
 bool Game::collide_sprite(sf::Sprite a, sf::Sprite b) {
-	return a.getGlobalBounds().intersects(b.getGlobalBounds());
+	return a.getGlobalBounds().findIntersection(b.getGlobalBounds()).has_value();
 }
 
 void Game::draw(sf::RenderWindow &window) {
