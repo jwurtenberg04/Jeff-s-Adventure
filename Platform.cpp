@@ -18,16 +18,16 @@ void Platform::draw(sf::RenderWindow& window) const {
 }
 
 std::optional<Collision> Platform::collide(const sf::FloatRect& hitbox) const {
-	sf::FloatRect overlap;
-	if (!shape.getGlobalBounds().intersects(hitbox, overlap)) {
+	auto overlap = shape.getGlobalBounds().findIntersection(hitbox);
+	if (!overlap) {
 		// No overlap:
 		return std::nullopt;
 	}
 	// Use the centers to determine the direction of the collision.
 	const auto center = shape.getPosition() + shape.getSize() / 2.0f;
-	const auto hitbox_center = hitbox.getPosition() + hitbox.getSize() / 2.0f;
+	const auto hitbox_center = hitbox.position + hitbox.size / 2.0f;
 	Direction direction;
-	if (overlap.width < overlap.height) {
+	if (overlap->size.x < overlap->size.y) {
 		// If there is less horizontal overlap than vertical overlap,
 		// consider the collision to be horizontal.
 		const bool from_left = hitbox_center.x < center.x;
@@ -37,5 +37,5 @@ std::optional<Collision> Platform::collide(const sf::FloatRect& hitbox) const {
 		const bool from_top = hitbox_center.y < center.y;
 		direction = from_top ? Direction::top : Direction::bottom;
 	}
-	return Collision { overlap, direction };
+	return Collision { *overlap, direction };
 }
