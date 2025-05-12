@@ -27,15 +27,15 @@ int Snippy::generate(std::filesystem::path asset_dir) {
 void Snippy::draw(sf::RenderWindow &window, sf::View &view, int switch_control) {
 	switch (switch_control) {
 	case 1: {
+		sf::Sprite sprite { snippyRightTextures[animation_index] };
 		sprite.setPosition(sf::Vector2f{ pos_x, pos_y });
-		sprite.setTexture(snippyRightTextures[animation_index]);
 		window.draw(sprite);
 		break;
 
 	}
 	case 2: {
+		sf::Sprite sprite { snippyLeftTextures[animation_index] };
 		sprite.setPosition(sf::Vector2f{ pos_x, pos_y });
-		sprite.setTexture(snippyLeftTextures[animation_index]);
 		window.draw(sprite);
 		break;
 	}
@@ -51,4 +51,8 @@ void Snippy::walk_right(sf::RenderWindow &window) {
 void Snippy::walk_left(sf::RenderWindow &window) {
 	pos_x -= walk_speed;
 	animation_index = (animation_index + 1) % std::size(snippyLeft);
+}
+
+sf::FloatRect Snippy::global_bounds() {
+	return { { pos_x, pos_y }, hitbox_size };
 }

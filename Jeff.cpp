@@ -37,27 +37,29 @@ void Jeff::j_attack(sf::RenderWindow &window) {
 
 void Jeff::draw(sf::RenderWindow &window, sf::View &view, int &switch_control, bool &j_attack) {
 	switch (switch_control) {
-	case 1:
+	case 1: {
+		sf::Sprite sprite { jeff_standing_texture };
 		sprite.setPosition(sf::Vector2f{ pos_x, pos_y });
-		sprite.setTexture(jeff_standing_texture);
 		window.draw(sprite);
 
 		ePos_x = x_finger_position_standing_right(sprite);
 		ePos_y = y_finger_position_standing_right(sprite);
 
 		break;
-	case 2:
+	}
+	case 2: {
+		sf::Sprite sprite { jeff_standing_left_texture };
 		sprite.setPosition(sf::Vector2f{ pos_x, pos_y });
-		sprite.setTexture(jeff_standing_left_texture);
 		window.draw(sprite);
 
 		ePos_x = x_finger_position_standing_left(sprite);
 		ePos_y = y_finger_position_standing_left(sprite);
 
 		break;
-	case 3:
+	}
+	case 3: {
+		sf::Sprite sprite { jeff_walking_left_textures[animation_index] };
 		sprite.setPosition(sf::Vector2f{ pos_x, pos_y });
-		sprite.setTexture(jeff_walking_left_textures[animation_index]);
 		window.draw(sprite);
 
 		ePos_x = x_finger_position_wl(sprite);
@@ -65,9 +67,10 @@ void Jeff::draw(sf::RenderWindow &window, sf::View &view, int &switch_control, b
 
 		switch_control = 2;
 		break;
-	case 4:
+	}
+	case 4: {
+		sf::Sprite sprite { jeff_walking_textures[animation_index] };
 		sprite.setPosition(sf::Vector2f{ pos_x, pos_y });
-		sprite.setTexture(jeff_walking_textures[animation_index]);
 		window.draw(sprite);
 
 		ePos_x = x_finger_position_wr(sprite);
@@ -76,13 +79,13 @@ void Jeff::draw(sf::RenderWindow &window, sf::View &view, int &switch_control, b
 		switch_control = 1;
 		break;
 	}
+	}
 }
 
 void Jeff::draw_debug(sf::RenderWindow &window) {
 	auto bounds = global_bounds();
-	sf::RectangleShape shape;
-	shape.setPosition(bounds.getPosition());
-	shape.setSize(bounds.getSize());
+	sf::RectangleShape shape { bounds.size };
+	shape.setPosition(bounds.position);
 	shape.setOutlineThickness(4.0f);
 	shape.setOutlineColor(sf::Color::Magenta);
 	shape.setFillColor(sf::Color::Transparent);
@@ -90,10 +93,7 @@ void Jeff::draw_debug(sf::RenderWindow &window) {
 }
 
 sf::FloatRect Jeff::global_bounds() {
-	auto global_bounds = sprite.getGlobalBounds();
-	global_bounds.left = pos_x;
-	global_bounds.top = pos_y;
-	return global_bounds;
+	return { { pos_x, pos_y }, hitbox_size };
 }
 
 void Jeff::update_y() {

@@ -12,12 +12,10 @@ public:
 	void draw(sf::RenderWindow &window);
 	void draw_debug(sf::RenderWindow &window);
 	void init_level();
-	static bool collide_sprite(sf::Sprite a, sf::Sprite b);
 	void collide_jeff(Jeff& jeff);
 
 private:
 	static constexpr const char* level_one = "jeff's-adventure-background-1.png";
 	sf::Texture background_level_one;
-	sf::Sprite sprite;
 	std::vector<Platform> platforms;
 };

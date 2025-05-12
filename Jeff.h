@@ -1,7 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Character.h"
-#include "Eraser.h"
 
 class Jeff : public Character {
 public:
@@ -24,7 +23,7 @@ public:
 	// frame per frame, which makes Jeff move pretty fast after just a few frames.
 	static constexpr float gravity = 0.7f;
 	float jeff_jump_strength = 17.0f;
-	sf::Sprite sprite;
+	static constexpr sf::Vector2f hitbox_size { 300.0f, 300.0f };
 
 private:
 	sf::Vector2f finger_stand_right = { 100, 23 };
@@ -89,7 +88,6 @@ private:
 		return finger_walk_left[animation_index].y * sprite.getScale().y + sprite.getPosition().y;
 	}
 
-	sf::Sprite eSprite;
 	int animation_index = 0;
 
 	// It's not a big deal, but we know all of these strings at compile time, so we don't really

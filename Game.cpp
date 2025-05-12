@@ -8,12 +8,8 @@ int Game::generate(std::filesystem::path asset_dir) {
 	return EXIT_SUCCESS;
 }
 
-bool Game::collide_sprite(sf::Sprite a, sf::Sprite b) {
-	return a.getGlobalBounds().findIntersection(b.getGlobalBounds()).has_value();
-}
-
 void Game::draw(sf::RenderWindow &window) {
-	sprite.setTexture(background_level_one);
+	sf::Sprite sprite { background_level_one };
 	window.draw(sprite);
 }
 
@@ -41,26 +37,26 @@ void Game::collide_jeff(Jeff& jeff) {
 		switch (collision.from) {
 		case Direction::left:
 			// Move Jeff before the left edge of the wall.
-			jeff.pos_x = platform_bounds.left - jeff_bounds.width;
+			jeff.pos_x = platform_bounds.position.x - jeff_bounds.size.x;
 			break;
 
 		case Direction::right:
 			// Move Jeff to the right edge of the wall.
-			jeff.pos_x = platform_bounds.left + platform_bounds.width;
+			jeff.pos_x = platform_bounds.position.x + platform_bounds.size.x;
 			break;
 
 		case Direction::top: {
 			// Move Jeff before the top of the floor.
-			jeff.pos_y = platform_bounds.top - jeff_bounds.height;
+			jeff.pos_y = platform_bounds.position.y - jeff_bounds.size.y;
 			// If the player is pressing the space key, then Jeff should jump.
 			// Otherwise Jeff is on the floor and shouldn't fall into it.
-			bool pressing_space = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
+			bool pressing_space = sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Space);
 			jeff.velocity_y = pressing_space ? -jeff.jeff_jump_strength : 0.0f;
 			break;
 		}
 
 		case Direction::bottom:
-			jeff.pos_y = platform_bounds.top + platform_bounds.height;
+			jeff.pos_y = platform_bounds.position.y + platform_bounds.size.y;
 			jeff.velocity_y = 0.0f;
 			break;
 		}

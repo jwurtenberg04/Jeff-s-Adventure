@@ -14,7 +14,8 @@ public:
 	float pos_x = 600.0f;
 	float pos_y = 490.0f;
 	static constexpr float walk_speed = 2.5f;
-	sf::Sprite sprite;
+	static constexpr sf::Vector2f hitbox_size { 300.0f, 237.0f };
+
 private:
 	int animation_index = 0;
 
