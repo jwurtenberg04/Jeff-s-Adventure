@@ -9,8 +9,6 @@
 #include <SFML/Graphics.hpp>
 #include "Game.h"
 #include "Jeff.h"
-#include "Menu.h"
-#include "Character.h"
 #include "Eraser.h"
 #include "Snippy.h"
 
@@ -28,8 +26,8 @@ static const int view_height = 800;
 
 static void create_window(sf::Window& window, bool in_fullscreen = false) {
 	// Default settings for Jeff's Adventure:
-	sf::VideoMode video_mode(1'000, view_height);
-	sf::Uint32 style = sf::Style::Default;
+	sf::VideoMode video_mode { { 1'000, view_height } };
+	sf::State state = sf::State::Windowed;
 	if (in_fullscreen) {
 		auto fullscreen_modes = sf::VideoMode::getFullscreenModes();
 		if (fullscreen_modes.empty()) {
@@ -38,10 +36,10 @@ static void create_window(sf::Window& window, bool in_fullscreen = false) {
 		} else {
 			// Pick the best video mode (always at index 0).
 			video_mode = fullscreen_modes.at(0);
-			style = sf::Style::Fullscreen;
+			state = sf::State::Fullscreen;
 		}
 	}
-	window.create(video_mode, "Jeff's Adventure!", style);
+	window.create(video_mode, "Jeff's Adventure!", state);
 	window.setFramerateLimit(60);
 }
 
@@ -89,16 +87,12 @@ int main() {
 	}
 	game.init_level();
 	while (window.isOpen()) {
-		sf::Event event;
-		while (window.pollEvent(event)) {
-			switch (event.type) {
-			case sf::Event::Closed:
+		while (const std::optional event = window.pollEvent()) {
+			if (event->is<sf::Event::Closed>()) {
 				window.close();
-				break;
-			case sf::Event::KeyPressed: {
-				auto key = event.key;
-				if (key.code == sf::Keyboard::F) {
-					bool control = !key.alt && key.control && !key.shift && !key.system;
+			} else if (const auto* key = event->getIf<sf::Event::KeyPressed>()) {
+				if (key->code == sf::Keyboard::Key::F) {
+					bool control = !key->alt && key->control && !key->shift && !key->system;
 					// Ignore repeated key presses.
 					if (!f_key_previously_pressed && control) {
 						in_fullscreen = !in_fullscreen;
@@ -106,14 +100,9 @@ int main() {
 					}
 					f_key_previously_pressed = true;
 				}
-				break;
-			}
-			case sf::Event::KeyReleased:
-				if (event.key.code == sf::Keyboard::F)
+			} else if (const auto* key = event->getIf<sf::Event::KeyReleased>()) {
+				if (key->code == sf::Keyboard::Key::F)
 					f_key_previously_pressed = false;
-				break;
-			default:
-				break;
 			}
 		}
 
@@ -123,21 +112,21 @@ int main() {
 		}
 
 		j_attack = false;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
 			window.close();
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::A)) {
 			jeff.walk_left(window, -1.0f);
 			switch_control = 3;
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::D)) {
 			jeff.walk_right(window, 1.0f);
 			switch_control = 4;
 		}
 
 		//haha bang bang shoot
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::J)) {
 			new_eraser = std::chrono::high_resolution_clock::now();
 			auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(new_eraser - last_eraser);
 
@@ -152,7 +141,7 @@ int main() {
 		// Update Jeff's position before handling collisions and rendering.
 		jeff.update_y();
 
-		if (snippy_alive && game.collide_sprite(jeff.sprite, snippy.sprite)) {
+		if (snippy_alive && jeff.global_bounds().findIntersection(snippy.global_bounds())) {
 			jeff.pos_x = 150.0f;
 		}
 

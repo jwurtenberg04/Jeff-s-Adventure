@@ -1,7 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Character.h"
-#include "Eraser.h"
 
 class Jeff : public Character {
 public:
@@ -21,7 +20,7 @@ public:
 	static constexpr float walk_speed = 5.0f;
 	static constexpr float gravity = 0.7f;
 	float jeff_jump_strength = 17.0f;
-	sf::Sprite sprite;
+	static constexpr sf::Vector2f hitbox_size { 300.0f, 300.0f };
 
 private:
 	sf::Vector2f finger_stand_right = { 100, 23 };
