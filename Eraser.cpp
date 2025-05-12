@@ -1,12 +1,10 @@
 #include "Eraser.h"
 
 Eraser::Eraser(sf::Vector2f position, sf::Vector2f velocity)
-	: position{ position }, velocity{ velocity }
-{
-	sprite.setTexture(texture);
-}
+	: position { position }, velocity { velocity } {}
 
 void Eraser::draw(sf::RenderWindow &window) {
+	sf::Sprite sprite { texture };
 	sprite.setPosition(position);
 	window.draw(sprite);
 }

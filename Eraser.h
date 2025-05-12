@@ -9,9 +9,7 @@ public:
 	void move();
 	static bool load_texture(std::filesystem::path asset_dir);
 private:
-	sf::Texture temp {"images/black.jpg"};
 	sf::Vector2f position;
 	sf::Vector2f velocity;
-	sf::Sprite sprite{temp};
 	static sf::Texture texture;
 };
