@@ -1,7 +1,7 @@
 #include "Snippy.h"
 #include <iostream>
 
-int Snippy::generate(std::filesystem::path asset_dir) {
+int Snippy::generate(const std::filesystem::path& asset_dir) {
 	if (!snippyIdleRight.loadFromFile((asset_dir / "Snippy/Snippy-Right00.png").string())) {
 		std::cerr << "Could not load Snippy-1.png.\n";
 		return EXIT_FAILURE;

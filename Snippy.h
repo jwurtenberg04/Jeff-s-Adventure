@@ -5,7 +5,7 @@
 class Snippy
 {
 public:
-	int generate(std::filesystem::path asset_dir);
+	int generate(const std::filesystem::path& asset_dir);
 	void walk_right(sf::RenderWindow &window);
 	void walk_left(sf::RenderWindow &window);
 	void draw(sf::RenderWindow &window, sf::View &view, int switch_control);

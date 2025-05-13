@@ -8,7 +8,7 @@
 class Game
 {
 public:
-	int generate(std::filesystem::path asset_dir);
+	int generate(const std::filesystem::path& asset_dir);
 	void draw(sf::RenderWindow &window);
 	void draw_debug(sf::RenderWindow &window);
 	void init_level();
