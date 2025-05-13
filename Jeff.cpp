@@ -79,7 +79,7 @@ void Jeff::draw(sf::RenderWindow &window, sf::View &view, int &switch_control, b
 	}
 }
 
-void Jeff::draw_debug(sf::RenderWindow &window) {
+void Jeff::draw_debug(sf::RenderWindow &window) const {
 	auto bounds = global_bounds();
 	sf::RectangleShape shape { bounds.size };
 	shape.setPosition(bounds.position);
@@ -89,7 +89,7 @@ void Jeff::draw_debug(sf::RenderWindow &window) {
 	window.draw(shape);
 }
 
-sf::FloatRect Jeff::global_bounds() {
+sf::FloatRect Jeff::global_bounds() const {
 	return { { pos_x, pos_y }, hitbox_size };
 }
 
