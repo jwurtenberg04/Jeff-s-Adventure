@@ -1,6 +1,6 @@
 #include "Jeff.h"
 
-int Jeff::generate(std::filesystem::path asset_dir) {
+int Jeff::generate(const std::filesystem::path& asset_dir) {
 	if (!jeff_standing_texture.loadFromFile((asset_dir / jeff_standing).string())) return EXIT_FAILURE;
 	if (!jeff_standing_left_texture.loadFromFile((asset_dir / jeff_standing_left).string())) return EXIT_FAILURE;
 	for (std::size_t i = 0; i < std::size(jeff_walking); i++) {

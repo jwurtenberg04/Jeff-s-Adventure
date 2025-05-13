@@ -1,7 +1,7 @@
 #include "Snippy.h"
 #include <iostream>
 
-int Snippy::generate(std::filesystem::path asset_dir) {
+int Snippy::generate(const std::filesystem::path& asset_dir) {
 	if (!snippyIdleRight.loadFromFile((asset_dir / "Snippy/Snippy-Right00.png").string())) {
 		std::cout << "Could not load Snippy-1.png. \n";
 		return EXIT_FAILURE;
@@ -22,7 +22,6 @@ int Snippy::generate(std::filesystem::path asset_dir) {
 	}
 	return 0;
 }
-
 
 void Snippy::draw(sf::RenderWindow &window, sf::View &view, int switch_control) {
 	switch (switch_control) {
