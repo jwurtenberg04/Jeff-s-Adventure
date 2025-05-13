@@ -2,20 +2,21 @@
 #include <iostream>
 
 int Snippy::generate(const std::filesystem::path& asset_dir) {
-	if (!snippyIdleRight.loadFromFile((asset_dir / "Snippy/Snippy-Right00.png").string())) {
-		std::cerr << "Could not load Snippy-1.png.\n";
+	auto path = asset_dir / "Snippy/Snippy-Right00.png";
+	if (!snippyIdleRight.loadFromFile(path)) {
+		std::cerr << "Could not load: " << path << '\n';
 		return EXIT_FAILURE;
 	}
 	for (std::size_t i = 0; i < std::size(snippyRight); i++) {
 		auto path = asset_dir / snippyRight[i];
-		if (!snippyRightTextures[i].loadFromFile(path.string())) {
+		if (!snippyRightTextures[i].loadFromFile(path)) {
 			std::cerr << "Could not load: " << path << '\n';
 			return EXIT_FAILURE;
 		}
 	}
 	for (std::size_t i = 0; i < std::size(snippyLeft); i++) {
 		auto path = asset_dir / snippyLeft[i];
-		if (!snippyLeftTextures[i].loadFromFile(path.string())) {
+		if (!snippyLeftTextures[i].loadFromFile(path)) {
 			std::cerr << "Could not load: " << path << '\n';
 			return EXIT_FAILURE;
 		}
