@@ -10,7 +10,7 @@ public:
 	void walk_left(sf::RenderWindow &window);
 	void draw(sf::RenderWindow &window, sf::View &view, int switch_control);
 	void spawn(int xPos, int yPos);
-	sf::FloatRect global_bounds();
+	sf::FloatRect global_bounds() const;
 	float pos_x = 600.0f;
 	float pos_y = 490.0f;
 	static constexpr float walk_speed = 2.5f;

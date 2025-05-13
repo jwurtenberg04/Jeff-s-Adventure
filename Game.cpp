@@ -13,7 +13,7 @@ void Game::draw(sf::RenderWindow &window) {
 	window.draw(sprite);
 }
 
-void Game::draw_debug(sf::RenderWindow &window) {
+void Game::draw_debug(sf::RenderWindow &window) const {
 	for (const auto& platform : platforms)
 		platform.draw(window);
 }

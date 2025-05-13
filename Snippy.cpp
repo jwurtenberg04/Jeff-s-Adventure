@@ -52,6 +52,6 @@ void Snippy::walk_left(sf::RenderWindow &window) {
 	animation_index = (animation_index + 1) % std::size(snippyLeft);
 }
 
-sf::FloatRect Snippy::global_bounds() {
+sf::FloatRect Snippy::global_bounds() const {
 	return { { pos_x, pos_y }, hitbox_size };
 }

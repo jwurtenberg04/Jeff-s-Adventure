@@ -8,9 +8,9 @@ public:
 	void walk_right(sf::RenderWindow &window, float direction);
 	void walk_left(sf::RenderWindow &window, float direction);
 	void draw(sf::RenderWindow &window, sf::View &view, int &switch_control, bool &j_attack);
-	void draw_debug(sf::RenderWindow &window);
+	void draw_debug(sf::RenderWindow &window) const;
 	void j_attack(sf::RenderWindow &window);
-	sf::FloatRect global_bounds();
+	sf::FloatRect global_bounds() const;
 	void update_y();
 	float ePos_x;
 	float ePos_y;
@@ -53,20 +53,20 @@ private:
 	};
 
 	//returns the x and y positions for jeff's finger when facing right
-	auto x_finger_position_standing_right(sf::Sprite &sprite) {
+	auto x_finger_position_standing_right(sf::Sprite &sprite) const {
 		return finger_stand_right.x * sprite.getScale().x + sprite.getPosition().x;
 	}
 
-	auto y_finger_position_standing_right(sf::Sprite &sprite) {
+	auto y_finger_position_standing_right(sf::Sprite &sprite) const {
 		return finger_stand_right.y * sprite.getScale().y + sprite.getPosition().y;
 	}
 
 	//returns the x and y positions for jeff's finger when facing left
-	auto x_finger_position_standing_left(sf::Sprite &sprite) {
+	auto x_finger_position_standing_left(sf::Sprite &sprite) const {
 		return finger_stand_left.x * sprite.getScale().x + sprite.getPosition().x;
 	}
 
-	auto y_finger_position_standing_left(sf::Sprite &sprite) {
+	auto y_finger_position_standing_left(sf::Sprite &sprite) const {
 		return finger_stand_left.y * sprite.getScale().y + sprite.getPosition().y;
 	}
 
