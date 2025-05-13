@@ -16,5 +16,5 @@ void Eraser::move() {
 sf::Texture Eraser::texture{};
 
 bool Eraser::load_texture(const std::filesystem::path& asset_dir) {
-	return texture.loadFromFile((asset_dir / "eraser.png").string());
+	return texture.loadFromFile(asset_dir / "eraser.png");
 }

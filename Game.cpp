@@ -1,7 +1,7 @@
 #include "Game.h"
 
 int Game::generate(const std::filesystem::path& asset_dir) {
-	if (!background_level_one.loadFromFile((asset_dir / level_one).string()))
+	if (!background_level_one.loadFromFile(asset_dir / level_one))
 		return EXIT_FAILURE;
 	// We want the background to have a pixelated look.
 	background_level_one.setSmooth(false);

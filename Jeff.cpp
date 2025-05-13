@@ -1,18 +1,18 @@
 #include "Jeff.h"
 
 int Jeff::generate(const std::filesystem::path& asset_dir) {
-	if (!jeff_standing_texture.loadFromFile((asset_dir / jeff_standing).string())) return EXIT_FAILURE;
-	if (!jeff_standing_left_texture.loadFromFile((asset_dir / jeff_standing_left).string())) return EXIT_FAILURE;
+	if (!jeff_standing_texture.loadFromFile(asset_dir / jeff_standing)) return EXIT_FAILURE;
+	if (!jeff_standing_left_texture.loadFromFile(asset_dir / jeff_standing_left)) return EXIT_FAILURE;
 	for (std::size_t i = 0; i < std::size(jeff_walking); i++) {
-		if (!jeff_walking_textures[i].loadFromFile((asset_dir / jeff_walking[i]).string()))
+		if (!jeff_walking_textures[i].loadFromFile(asset_dir / jeff_walking[i]))
 			return EXIT_FAILURE;
 	}
 	for (std::size_t i = 0; i < std::size(jeff_walking_left); i++) {
-		if (!jeff_walking_left_textures[i].loadFromFile((asset_dir / jeff_walking_left[i]).string()))
+		if (!jeff_walking_left_textures[i].loadFromFile(asset_dir / jeff_walking_left[i]))
 			return EXIT_FAILURE;
 	}
 	for (std::size_t i = 0; i < std::size(jeff_shooting); i++) {
-		if (!jeff_shooting_textures[i].loadFromFile((asset_dir / jeff_shooting[i]).string()))
+		if (!jeff_shooting_textures[i].loadFromFile(asset_dir / jeff_shooting[i]))
 			return EXIT_FAILURE;
 	}
 	return EXIT_SUCCESS;
