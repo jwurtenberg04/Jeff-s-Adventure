@@ -53,7 +53,15 @@ target_link_libraries(jeffs-adventure PRIVATE
 
 # On Windows, `sfml-main` provides the `WinMain()` entry point.
 if(WIN32)
-	target_link_libraries(jeffs-adventure PRIVATE sfml-main)
+	# TODO: Remove the `find_library` call when SFML 3.1.0 is released:
+	# https://github.com/SFML/SFML/pull/3431
+	find_library(JEFF_SFML_MAIN
+		NAMES "sfml-main" "sfml-main-s"
+		NAMES_PER_DIR
+		HINTS "${CMAKE_CURRENT_SOURCE_DIR}/lib"
+		REQUIRED
+	)
+	target_link_libraries(jeffs-adventure PRIVATE "${JEFF_SFML_MAIN}")
 endif()
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
