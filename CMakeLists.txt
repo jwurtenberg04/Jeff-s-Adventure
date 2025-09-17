@@ -45,7 +45,7 @@ target_link_directories(jeffs-adventure PRIVATE bin lib)
 # Look in `include/` for headers.
 target_include_directories(jeffs-adventure PRIVATE include)
 
-# We want to link with SFML's audio, graphics, windowing, and system libraries.
+# Link against SFML's audio, graphics, windowing, and system libraries.
 # NOTE: Link dependencies after dependents e.g. `sfml-system` after `sfml-window`.
 target_link_libraries(jeffs-adventure PRIVATE
 	sfml-audio sfml-graphics sfml-window sfml-system
