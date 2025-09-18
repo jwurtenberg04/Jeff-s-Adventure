@@ -9,8 +9,8 @@ void Eraser::draw(sf::RenderWindow &window) {
 	window.draw(sprite);
 }
 
-void Eraser::move() {
-	position += velocity;
+void Eraser::move(sf::Time dt) {
+	position += velocity * dt.asSeconds();
 }
 
 sf::Texture Eraser::texture{};

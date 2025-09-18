@@ -1,17 +1,18 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 #include "Character.h"
 
 class Jeff : public Character {
 public:
 	virtual int generate(const std::filesystem::path& asset_dir) override;
-	void walk_right() override;
-	void walk_left() override;
+	void walk_right(sf::Time dt) override;
+	void walk_left(sf::Time dt) override;
 	void draw(sf::RenderWindow &window, sf::View &view, int &switch_control, bool &j_attack);
 	void draw_debug(sf::RenderWindow &window) const;
 	void j_attack(sf::RenderWindow &window);
 	sf::FloatRect global_bounds() const;
-	void update_y();
+	void update_y(sf::Time dt);
 	float ePos_x;
 	float ePos_y;
 	float pos_x = 150.0f;
