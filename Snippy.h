@@ -6,8 +6,8 @@ class Snippy
 {
 public:
 	int generate(const std::filesystem::path& asset_dir);
-	void walk_right(sf::RenderWindow &window);
-	void walk_left(sf::RenderWindow &window);
+	void walk_right();
+	void walk_left();
 	void draw(sf::RenderWindow &window, sf::View &view, int switch_control);
 	void spawn(int xPos, int yPos);
 	sf::FloatRect global_bounds() const;
