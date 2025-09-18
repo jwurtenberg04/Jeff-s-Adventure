@@ -40,7 +40,7 @@ static void create_window(sf::Window& window, bool in_fullscreen = false) {
 		}
 	}
 	window.create(video_mode, "Jeff's Adventure!", state);
-	window.setFramerateLimit(60);
+	window.setVerticalSyncEnabled(true);
 }
 
 int main() {
@@ -87,6 +87,7 @@ int main() {
 		return EXIT_FAILURE;
 	}
 	game.init_level();
+	sf::Clock clock;
 	while (window.isOpen()) {
 		while (const std::optional event = window.pollEvent()) {
 			if (event->is<sf::Event::Closed>()) {
@@ -107,8 +108,13 @@ int main() {
 			}
 		}
 
-		const sf::Time dt = sf::seconds(1.0f);
+		// In case the previous frame took a long time, limit `dt` to 50 ms.
+		// Falling behind is better than attempting to simulate, for instance,
+		// 500 ms of time in one timestep, which may lead to tunneling.
+		const sf::Time dt = std::min(sf::milliseconds(50), clock.restart());
 
+		// If the window is not focused, we intentionally let the game fall
+		// behind. Unfocusing the window effectively pauses the game.
 		if (!window.hasFocus()) {
 			window.display();
 			continue;
@@ -134,7 +140,8 @@ int main() {
 			new_eraser = std::chrono::high_resolution_clock::now();
 			auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(new_eraser - last_eraser);
 
-			float horizontal_velocity = switch_control == 1 || switch_control == 4 ? 10 : -10;
+			float direction = switch_control == 1 || switch_control == 4 ? 1.0f : -1.0f;
+			float horizontal_velocity = direction * 600.0f;
 			if (duration.count() > 500) {
 				j_attack = true;
 				erasers.push_back(Eraser{ {jeff.ePos_x, jeff.ePos_y}, sf::Vector2f{horizontal_velocity, 0} });

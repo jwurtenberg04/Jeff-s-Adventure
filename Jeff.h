@@ -18,12 +18,12 @@ public:
 	float pos_x = 150.0f;
 	float pos_y = 395.0f;
 	float velocity_y = 0.0f;
-	static constexpr float walk_speed = 5.0f;
-	// We're not using physical units like meters, so instead of picking a value for gravity that
-	// matches the real world, we can pick whatever looks good. Also, 9.8 means 9.8 pixels per
-	// frame per frame, which makes Jeff move pretty fast after just a few frames.
-	static constexpr float gravity = 0.7f;
-	float jeff_jump_strength = 17.0f;
+	// `walk_speed` is in viewport units per second.
+	static constexpr float walk_speed = 300.0f;
+	// `gravity` is in viewport units per second squared.
+	static constexpr float gravity = 2520.0f;
+	// `jeff_jump_strength` is in viewport units per second.
+	float jeff_jump_strength = 1020.0f;
 	static constexpr sf::Vector2f hitbox_size { 300.0f, 300.0f };
 
 private:
