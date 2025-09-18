@@ -15,8 +15,9 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 	set_property(CACHE CMAKE_INSTALL_PREFIX PROPERTY VALUE "${CMAKE_BINARY_DIR}/out")
 endif()
 
-option(CMAKE_COLOR_DIAGNOSTICS "Enable colored diagnostics" YES)
-set(CMAKE_EXPORT_COMPILE_COMMANDS YES)
+option(CMAKE_COLOR_DIAGNOSTICS "Enable colored diagnostics" ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_INSTALL_MESSAGE LAZY)
 
 # Create the main executable.
 add_executable(jeffs-adventure
@@ -34,7 +35,7 @@ add_executable(jeffs-adventure
 target_compile_features(jeffs-adventure PRIVATE cxx_std_17)
 
 # No compiler-specific extensions (e.g. pass `-std=c++17` not `-std=gnu++17`):
-set_target_properties(jeffs-adventure PROPERTIES CXX_EXTENSIONS NO)
+set_target_properties(jeffs-adventure PROPERTIES CXX_EXTENSIONS OFF)
 
 # Search in `bin/` and `lib/` for libraries.
 target_link_directories(jeffs-adventure PRIVATE "bin" "lib")
@@ -43,8 +44,9 @@ target_link_directories(jeffs-adventure PRIVATE "bin" "lib")
 target_include_directories(jeffs-adventure PRIVATE "include")
 
 # Link against SFML's audio, graphics, windowing, and system libraries.
-target_link_libraries(jeffs-adventure PRIVATE
-	sfml-audio sfml-graphics sfml-window sfml-system
+# NOTE: The order matters (https://www.sfml-dev.org/faq/build-use/#link).
+target_link_libraries(jeffs-adventure
+	PRIVATE sfml-audio sfml-graphics sfml-window sfml-system
 )
 
 # Windows only: `sfml-main` provides the `WinMain()` entry point.
