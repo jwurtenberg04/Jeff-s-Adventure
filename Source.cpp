@@ -107,6 +107,8 @@ int main() {
 			}
 		}
 
+		const sf::Time dt = sf::seconds(1.0f);
+
 		if (!window.hasFocus()) {
 			window.display();
 			continue;
@@ -118,12 +120,12 @@ int main() {
 
 		// If the A key is currently held down, then...
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::A)) {
-			jeff.walk_left();
+			jeff.walk_left(dt);
 			switch_control = 3;
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::D)) {
-			jeff.walk_right();
+			jeff.walk_right(dt);
 			switch_control = 4;
 		}
 
@@ -141,7 +143,7 @@ int main() {
 		}
 
 		// Update Jeff's y position before handling collisions and drawing.
-		jeff.update_y();
+		jeff.update_y(dt);
 
 		if (snippy_alive && jeff.global_bounds().findIntersection(snippy.global_bounds())) {
 			jeff.pos_x = 150.0f;
@@ -159,16 +161,16 @@ int main() {
 		game.draw(window);
 		game.draw_debug(window);
 		for (auto &eraser : erasers) {
-			eraser.move();
+			eraser.move(dt);
 			eraser.draw(window);
 		}
 
 		if (jeff.pos_x < snippy.pos_x) {
-			snippy.walk_left();
+			snippy.walk_left(dt);
 			snippy_switch_control = 2;
 		}
 		else {
-			snippy.walk_right();
+			snippy.walk_right(dt);
 			snippy_switch_control = 1;
 		}
 

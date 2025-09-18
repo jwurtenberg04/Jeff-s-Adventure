@@ -43,13 +43,13 @@ void Snippy::draw(sf::RenderWindow &window, sf::View &view, int switch_control) 
 
 }
 
-void Snippy::walk_right() {
-	pos_x += walk_speed;
+void Snippy::walk_right(sf::Time dt) {
+	pos_x += walk_speed * dt.asSeconds();
 	animation_index = (animation_index + 1) % std::size(snippyRight);
 }
 
-void Snippy::walk_left() {
-	pos_x -= walk_speed;
+void Snippy::walk_left(sf::Time dt) {
+	pos_x -= walk_speed * dt.asSeconds();
 	animation_index = (animation_index + 1) % std::size(snippyLeft);
 }
 

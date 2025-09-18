@@ -1,13 +1,14 @@
 #pragma once
 #include <filesystem>
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 
 class Snippy
 {
 public:
 	int generate(const std::filesystem::path& asset_dir);
-	void walk_right();
-	void walk_left();
+	void walk_right(sf::Time dt);
+	void walk_left(sf::Time dt);
 	void draw(sf::RenderWindow &window, sf::View &view, int switch_control);
 	void spawn(int xPos, int yPos);
 	sf::FloatRect global_bounds() const;

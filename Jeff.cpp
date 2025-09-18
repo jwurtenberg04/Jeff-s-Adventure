@@ -18,16 +18,16 @@ int Jeff::generate(const std::filesystem::path& asset_dir) {
 	return EXIT_SUCCESS;
 }
 
-void Jeff::walk_right() {
-	pos_x += walk_speed;
+void Jeff::walk_right(sf::Time dt) {
+	pos_x += walk_speed * dt.asSeconds();
 
 	// Loop through the animation when walking.
 	// The % operator wraps `animation_index` around back to 0 once it reaches the limit.
 	animation_index = (animation_index + 1) % std::size(jeff_walking);
 }
 
-void Jeff::walk_left() {
-	pos_x -= walk_speed;
+void Jeff::walk_left(sf::Time dt) {
+	pos_x -= walk_speed * dt.asSeconds();
 	animation_index = (animation_index + 1) % std::size(jeff_walking_left);
 }
 
@@ -96,7 +96,7 @@ sf::FloatRect Jeff::global_bounds() const {
 	return { { pos_x, pos_y }, hitbox_size };
 }
 
-void Jeff::update_y() {
-	velocity_y += gravity;
-	pos_y += velocity_y;
+void Jeff::update_y(sf::Time dt) {
+	velocity_y += gravity * dt.asSeconds();
+	pos_y += velocity_y * dt.asSeconds();
 }
