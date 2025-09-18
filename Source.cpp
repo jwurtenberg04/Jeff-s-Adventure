@@ -116,12 +116,12 @@ int main() {
 			window.close();
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::A)) {
-			jeff.walk_left(window, -1.0f);
+			jeff.walk_left();
 			switch_control = 3;
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::D)) {
-			jeff.walk_right(window, 1.0f);
+			jeff.walk_right();
 			switch_control = 4;
 		}
 
@@ -162,10 +162,10 @@ int main() {
 		}
 
 		if (jeff.pos_x < snippy.pos_x) {
-			snippy.walk_left(window);
+			snippy.walk_left();
 			snippy_switch_control = 2;
 		} else {
-			snippy.walk_right(window);
+			snippy.walk_right();
 			snippy_switch_control = 1;
 		}
 

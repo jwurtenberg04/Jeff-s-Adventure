@@ -5,8 +5,8 @@
 class Jeff : public Character {
 public:
 	virtual int generate(const std::filesystem::path& asset_dir) override;
-	void walk_right(sf::RenderWindow &window, float direction);
-	void walk_left(sf::RenderWindow &window, float direction);
+	void walk_right() override;
+	void walk_left() override;
 	void draw(sf::RenderWindow &window, sf::View &view, int &switch_control, bool &j_attack);
 	void draw_debug(sf::RenderWindow &window) const;
 	void j_attack(sf::RenderWindow &window);
