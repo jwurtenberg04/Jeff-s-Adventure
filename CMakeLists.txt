@@ -16,10 +16,13 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 endif()
 
 # Let users enable colored diagnostics (e.g. compiler errors, warnings).
-option(CMAKE_COLOR_DIAGNOSTICS "Enable colored diagnostics" YES)
+option(CMAKE_COLOR_DIAGNOSTICS "Enable colored diagnostics" ON)
 
 # Export `compile_commands.json` file for language servers.
-set(CMAKE_EXPORT_COMPILE_COMMANDS YES)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+# When installing, don't display files that are already up-to-date.
+set(CMAKE_INSTALL_MESSAGE LAZY)
 
 # Create the main executable.
 add_executable(jeffs-adventure
@@ -37,7 +40,7 @@ add_executable(jeffs-adventure
 target_compile_features(jeffs-adventure PRIVATE cxx_std_17)
 
 # No compiler-specific extensions (e.g. pass `-std=c++17` not `-std=gnu++17`)
-set_target_properties(jeffs-adventure PROPERTIES CXX_EXTENSIONS NO)
+set_target_properties(jeffs-adventure PROPERTIES CXX_EXTENSIONS OFF)
 
 # Look in `bin/` and `lib/` for libraries.
 target_link_directories(jeffs-adventure PRIVATE bin lib)
@@ -46,9 +49,9 @@ target_link_directories(jeffs-adventure PRIVATE bin lib)
 target_include_directories(jeffs-adventure PRIVATE include)
 
 # Link against SFML's audio, graphics, windowing, and system libraries.
-# NOTE: Link dependencies after dependents e.g. `sfml-system` after `sfml-window`.
-target_link_libraries(jeffs-adventure PRIVATE
-	sfml-audio sfml-graphics sfml-window sfml-system
+# NOTE: The order matters (https://www.sfml-dev.org/faq/build-use/#link).
+target_link_libraries(jeffs-adventure
+	PRIVATE sfml-audio sfml-graphics sfml-window sfml-system
 )
 
 # On Windows, `sfml-main` provides the `WinMain()` entry point.
@@ -68,7 +71,7 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR "${CMAKE_CXX_COMPILER_ID}" STREQ
 	# For GCC or Clang, enable more warnings.
 	target_compile_options(jeffs-adventure PRIVATE -Wall -Wextra -Wno-unused-parameter)
 
-	# In debug modes, enable extra debug info and UBSAN.
+	# In the debug configuration, enable extra debug info and UBSAN.
 	target_compile_options(jeffs-adventure PRIVATE $<$<CONFIG:Debug>:-g3 -fsanitize-trap=undefined>)
 endif()
 
