@@ -14,7 +14,8 @@ public:
 	sf::FloatRect global_bounds() const;
 	float pos_x = 600.0f;
 	float pos_y = 490.0f;
-	static constexpr float walk_speed = 2.5f;
+	// `walk_speed` is in viewport units per second.
+	static constexpr float walk_speed = 150.0f;
 	static constexpr sf::Vector2f hitbox_size { 300.0f, 237.0f };
 
 private:
