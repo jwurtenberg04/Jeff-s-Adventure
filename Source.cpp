@@ -167,6 +167,10 @@ int main() {
 		for (auto &eraser : erasers) {
 			eraser.move(dt);
 			eraser.draw(window);
+			eraser.draw_debug(window);
+			if(eraser.getRect().findIntersection(snippy.global_bounds())){
+				snippy_alive = false;
+			}
 		}
 
 		if (jeff.pos_x < snippy.pos_x) {
@@ -179,6 +183,8 @@ int main() {
 
 		if (snippy_alive) {
 			snippy.draw(window, view, snippy_switch_control);
+		}else{
+			snippy.draw(window, view, 3);
 		}
 
 		jeff.draw(window, view, switch_control, j_attack);

@@ -38,6 +38,8 @@ void Snippy::draw(sf::RenderWindow &window, sf::View &view, int switch_control) 
 		window.draw(sprite);
 		break;
 	}
+	case 3:
+		break;
 	}
 }
 
