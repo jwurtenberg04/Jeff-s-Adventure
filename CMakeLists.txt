@@ -70,6 +70,7 @@ endif()
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 	# For GCC or Clang, enable more warnings.
 	target_compile_options(jeffs-adventure PRIVATE -Wall -Wextra -Wno-unused-parameter)
+	target_compile_options(jeffs-adventure PRIVATE -Wconversion -Wsign-conversion)
 
 	# In the debug configuration, enable extra debug info and UBSAN.
 	target_compile_options(jeffs-adventure PRIVATE $<$<CONFIG:Debug>:-g3 -fsanitize-trap=undefined>)

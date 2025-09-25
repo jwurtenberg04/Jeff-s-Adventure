@@ -73,26 +73,29 @@ private:
 
 	//returns the x and y positions for jeff's finger when walking right
 	auto x_finger_position_wr(sf::Sprite &sprite) {
+		auto animation_index = animation_frame(std::size(finger_walk_right));
 		return finger_walk_right[animation_index].x * sprite.getScale().x + sprite.getPosition().x;
 	}
 
 	auto y_finger_position_wr(sf::Sprite &sprite) {
+		auto animation_index = animation_frame(std::size(finger_walk_right));
 		return finger_walk_right[animation_index].y * sprite.getScale().y + sprite.getPosition().y;
 	}
 
 	//returns the x and y positions for jeff's finger when walking left
 	auto x_finger_position_wl(sf::Sprite &sprite) {
+		auto animation_index = animation_frame(std::size(finger_walk_left));
 		return finger_walk_left[animation_index].x * sprite.getScale().x + sprite.getPosition().x;
 	}
 
 	auto y_finger_position_wl(sf::Sprite &sprite) {
+		auto animation_index = animation_frame(std::size(finger_walk_left));
 		return finger_walk_left[animation_index].y * sprite.getScale().y + sprite.getPosition().y;
 	}
 
-	int animation_index = 0;
+	sf::Clock animation_clock;
+	long animation_frame(long frame_count) const;
 
-	// It's not a big deal, but we know all of these strings at compile time, so we don't really
-	// need a fully dynamic string like std::string.
 	static constexpr const char* jeff_standing = "jeff-standing.png";
 	static constexpr const char* jeff_standing_left = "jeff-standing-left.png";
 	static constexpr const char* jeff_walking[] = {
