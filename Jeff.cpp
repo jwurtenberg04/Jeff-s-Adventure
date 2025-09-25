@@ -1,6 +1,5 @@
 #include "Jeff.h"
-#include <cassert>
-#include <type_traits> // For `std::is_integral_v`
+#include "Animation.h"
 
 int Jeff::generate(const std::filesystem::path& asset_dir) {
 	if (!jeff_standing_texture.loadFromFile(asset_dir / jeff_standing)) return EXIT_FAILURE;
@@ -53,7 +52,7 @@ void Jeff::draw(sf::RenderWindow &window, sf::View &view, int &switch_control, b
 		break;
 	}
 	case 3: {
-		auto animation_index = animation_frame(std::size(jeff_walking_left_textures));
+		auto animation_index = current_frame(std::size(jeff_walking_left_textures));
 		sf::Sprite sprite { jeff_walking_left_textures[animation_index] };
 		sprite.setPosition(sf::Vector2f{ pos_x, pos_y });
 		window.draw(sprite);
@@ -65,7 +64,7 @@ void Jeff::draw(sf::RenderWindow &window, sf::View &view, int &switch_control, b
 		break;
 	}
 	case 4: {
-		auto animation_index = animation_frame(std::size(jeff_walking_textures));
+		auto animation_index = current_frame(std::size(jeff_walking_textures));
 		sf::Sprite sprite { jeff_walking_textures[animation_index] };
 		sprite.setPosition(sf::Vector2f{ pos_x, pos_y });
 		window.draw(sprite);
@@ -98,17 +97,7 @@ void Jeff::update_y(sf::Time dt) {
 	pos_y += velocity_y * dt.asSeconds();
 }
 
-long Jeff::animation_frame(long frame_count) const {
+long Jeff::current_frame(long frame_count) const {
 	constexpr long fps = 60;
-	// Calculate how long each frame lasts.
-	constexpr std::chrono::microseconds frame_duration { 1'000'000 / fps };
-	auto time = animation_clock.getElapsedTime().toDuration();
-	// Wrap `time` back to 0 for each animation loop.
-	time %= frame_duration * frame_count;
-	// Get an integer frame index through truncating division.
-	auto frame = time / frame_duration;
-	// Double check that `frame` is an integer and in bounds.
-	static_assert(std::is_integral_v<decltype(frame)>);
-	assert(0 <= frame && frame < frame_count);
-	return frame;
+	return animation_frame(animation_clock.getElapsedTime(), fps, frame_count);
 }
