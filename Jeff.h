@@ -94,6 +94,8 @@ private:
 	}
 
 	sf::Clock animation_clock;
+
+	// The returned frame index is always less than `frame_count`.
 	long animation_frame(long frame_count) const;
 
 	static constexpr const char* jeff_standing = "jeff-standing.png";

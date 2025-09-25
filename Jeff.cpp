@@ -100,10 +100,14 @@ void Jeff::update_y(sf::Time dt) {
 
 long Jeff::animation_frame(long frame_count) const {
 	constexpr long fps = 60;
+	// Calculate how long each frame lasts.
 	constexpr std::chrono::microseconds frame_duration { 1'000'000 / fps };
 	auto time = animation_clock.getElapsedTime().toDuration();
+	// Wrap `time` back to 0 for each animation loop.
 	time %= frame_duration * frame_count;
+	// Get an integer frame index through truncating division.
 	auto frame = time / frame_duration;
+	// Double check that `frame` is an integer and in bounds.
 	static_assert(std::is_integral_v<decltype(frame)>);
 	assert(0 <= frame && frame < frame_count);
 	return frame;
