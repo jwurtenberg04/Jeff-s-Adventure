@@ -10,7 +10,7 @@ public:
 	void draw(sf::RenderWindow &window);
 	void move(sf::Time dt);
 	sf::FloatRect getRect();
-	void draw_debug(sf::RenderWindow &window);
+	void draw_debug(sf::RenderWindow &window, sf::FloatRect &rect);
 	static bool load_texture(const std::filesystem::path& asset_dir);
 
 private:

@@ -167,7 +167,7 @@ int main() {
 		for (auto &eraser : erasers) {
 			eraser.move(dt);
 			eraser.draw(window);
-			eraser.draw_debug(window);
+			auto rect = eraser.getRect();
 			if(eraser.getRect().findIntersection(snippy.global_bounds())){
 				snippy_alive = false;
 			}
