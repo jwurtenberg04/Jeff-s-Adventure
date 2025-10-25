@@ -27,9 +27,9 @@ public:
 	static constexpr sf::Vector2f hitbox_size { 300.0f, 300.0f };
 
 private:
-	sf::Vector2f finger_stand_right = { 100, 23 };
-	sf::Vector2f finger_stand_left = { -100, 23 };
-	sf::Vector2f finger_walk_right[47] = {
+	static constexpr sf::Vector2f finger_stand_right = { 100, 23 };
+	static constexpr sf::Vector2f finger_stand_left = { -100, 23 };
+	static constexpr sf::Vector2f finger_walk_right[] = {
 		{ 100, 23 }, { 100, 23 }, { 100, 23 }, { 100, 23 }, { 100, 23 },
 		{ 100, 30 }, { 100, 30 }, { 100, 30 }, { 100, 30 }, { 100, 30 },
 		{ 100, 37 }, { 100, 37 }, { 100, 37 }, { 100, 37 }, { 100, 37 },
@@ -41,7 +41,7 @@ private:
 		{ 100, 10 }, { 100, 10 }, { 100, 10 }, { 100, 10 }, { 100, 10 },
 		{ 100, 10 }, { 100, 10 }
 	};
-	sf::Vector2f finger_walk_left[45] = {
+	static constexpr sf::Vector2f finger_walk_left[] = {
 		{ -100, 23 }, { -100, 23 }, { -100, 23 }, { -100, 23 }, { -100, 23 },
 		{ -100, 30 }, { -100, 30 }, { -100, 30 }, { -100, 30 }, { -100, 30 },
 		{ -100, 37 }, { -100, 37 }, { -100, 37 }, { -100, 37 }, { -100, 37 },
@@ -145,6 +145,9 @@ private:
 		"jeff_shooting/jeff_shooting_39.png", "jeff_shooting/jeff_shooting_40.png", "jeff_shooting/jeff_shooting_41.png",
 		"jeff_shooting/jeff_shooting_42.png", "jeff_shooting/jeff_shooting_43.png"
 	};
+
+	static_assert(std::size(jeff_walking) == std::size(finger_walk_right));
+	static_assert(std::size(jeff_walking_left) == std::size(finger_walk_left));
 
 	sf::Texture jeff_standing_texture;
 	sf::Texture jeff_standing_left_texture;
