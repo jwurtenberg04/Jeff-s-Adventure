@@ -21,6 +21,7 @@ set(CMAKE_INSTALL_MESSAGE LAZY)
 
 # Create the main executable.
 add_executable(jeffs-adventure
+	"Animation.cpp"
 	"Character.cpp"
 	"Eraser.cpp"
 	"Game.cpp"
