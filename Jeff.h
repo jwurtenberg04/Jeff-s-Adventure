@@ -73,23 +73,28 @@ private:
 
 	// Return the X and Y coordinates for Jeff's finger when walking right.
 	auto x_finger_position_wr(sf::Sprite &sprite) const {
+		int animation_index = current_frame(std::size(finger_walk_right));
 		return finger_walk_right[animation_index].x * sprite.getScale().x + sprite.getPosition().x;
 	}
 
 	auto y_finger_position_wr(sf::Sprite &sprite) const {
+		int animation_index = current_frame(std::size(finger_walk_right));
 		return finger_walk_right[animation_index].y * sprite.getScale().y + sprite.getPosition().y;
 	}
 
 	// Return the X and Y coordinates for Jeff's finger when walking left.
 	auto x_finger_position_wl(sf::Sprite &sprite) const {
+		int animation_index = current_frame(std::size(finger_walk_left));
 		return finger_walk_left[animation_index].x * sprite.getScale().x + sprite.getPosition().x;
 	}
 
 	auto y_finger_position_wl(sf::Sprite &sprite) const {
+		int animation_index = current_frame(std::size(finger_walk_left));
 		return finger_walk_left[animation_index].y * sprite.getScale().y + sprite.getPosition().y;
 	}
 
-	int animation_index = 0;
+	sf::Clock animation_clock;
+	int current_frame(int frame_count) const;
 
 	static constexpr const char* jeff_standing = "jeff-standing.png";
 	static constexpr const char* jeff_standing_left = "jeff-standing-left.png";

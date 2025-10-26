@@ -1,4 +1,5 @@
 #include "Jeff.h"
+#include "Animation.h"
 
 int Jeff::generate(const std::filesystem::path& asset_dir) {
 	if (!jeff_standing_texture.loadFromFile(asset_dir / jeff_standing)) return EXIT_FAILURE;
@@ -20,17 +21,13 @@ int Jeff::generate(const std::filesystem::path& asset_dir) {
 
 void Jeff::walk_right(sf::Time dt) {
 	pos_x += walk_speed * dt.asSeconds();
-	animation_index = (animation_index + 1) % std::size(jeff_walking);
 }
 
 void Jeff::walk_left(sf::Time dt) {
 	pos_x -= walk_speed * dt.asSeconds();
-	animation_index = (animation_index + 1) % std::size(jeff_walking_left);
 }
 
-void Jeff::j_attack(sf::RenderWindow &window) {
-	animation_index = (animation_index + 1) % std::size(jeff_shooting);
-}
+void Jeff::j_attack(sf::RenderWindow &window) {}
 
 void Jeff::draw(sf::RenderWindow &window, sf::View &view, int &switch_control, bool &j_attack) {
 	switch (switch_control) {
@@ -55,6 +52,7 @@ void Jeff::draw(sf::RenderWindow &window, sf::View &view, int &switch_control, b
 		break;
 	}
 	case 3: {
+		int animation_index = current_frame(std::size(jeff_walking_left_textures));
 		sf::Sprite sprite { jeff_walking_left_textures[animation_index] };
 		sprite.setPosition(sf::Vector2f{ pos_x, pos_y });
 		window.draw(sprite);
@@ -66,6 +64,7 @@ void Jeff::draw(sf::RenderWindow &window, sf::View &view, int &switch_control, b
 		break;
 	}
 	case 4: {
+		int animation_index = current_frame(std::size(jeff_walking_textures));
 		sf::Sprite sprite { jeff_walking_textures[animation_index] };
 		sprite.setPosition(sf::Vector2f{ pos_x, pos_y });
 		window.draw(sprite);
@@ -96,4 +95,9 @@ sf::FloatRect Jeff::global_bounds() const {
 void Jeff::update_y(sf::Time dt) {
 	velocity_y += gravity * dt.asSeconds();
 	pos_y += velocity_y * dt.asSeconds();
+}
+
+int Jeff::current_frame(int frame_count) const {
+	constexpr int fps = 60;
+	return Animation::frame_at(animation_clock.getElapsedTime(), fps, frame_count);
 }

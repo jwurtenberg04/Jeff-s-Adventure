@@ -1,5 +1,6 @@
 #include "Snippy.h"
 #include <iostream>
+#include "Animation.h"
 
 int Snippy::generate(const std::filesystem::path& asset_dir) {
 	auto path = asset_dir / "Snippy/Snippy-Right00.png";
@@ -27,12 +28,14 @@ int Snippy::generate(const std::filesystem::path& asset_dir) {
 void Snippy::draw(sf::RenderWindow &window, sf::View &view, int switch_control) {
 	switch (switch_control) {
 	case 1: {
+		int animation_index = current_frame(std::size(snippyRightTextures));
 		sf::Sprite sprite { snippyRightTextures[animation_index] };
 		sprite.setPosition(sf::Vector2f{ pos_x, pos_y });
 		window.draw(sprite);
 		break;
 	}
 	case 2: {
+		int animation_index = current_frame(std::size(snippyLeftTextures));
 		sf::Sprite sprite { snippyLeftTextures[animation_index] };
 		sprite.setPosition(sf::Vector2f{ pos_x, pos_y });
 		window.draw(sprite);
@@ -45,14 +48,17 @@ void Snippy::draw(sf::RenderWindow &window, sf::View &view, int switch_control) 
 
 void Snippy::walk_right(sf::Time dt) {
 	pos_x += walk_speed * dt.asSeconds();
-	animation_index = (animation_index + 1) % std::size(snippyRight);
 }
 
 void Snippy::walk_left(sf::Time dt) {
 	pos_x -= walk_speed * dt.asSeconds();
-	animation_index = (animation_index + 1) % std::size(snippyLeft);
 }
 
 sf::FloatRect Snippy::global_bounds() const {
 	return { { pos_x, pos_y }, hitbox_size };
+}
+
+int Snippy::current_frame(int frame_count) const {
+	constexpr int fps = 60;
+	return Animation::frame_at(animation_clock.getElapsedTime(), fps, frame_count);
 }

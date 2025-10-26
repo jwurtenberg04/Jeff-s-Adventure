@@ -19,7 +19,8 @@ public:
 	static constexpr sf::Vector2f hitbox_size { 300.0f, 237.0f };
 
 private:
-	int animation_index = 0;
+	sf::Clock animation_clock;
+	int current_frame(int frame_count) const;
 
 	static constexpr const char* snippyRight[] = {
 		"Snippy/Snippy-Right00.png", "Snippy/Snippy-Right00.png", "Snippy/Snippy-Right00.png", "Snippy/Snippy-Right01.png", "Snippy/Snippy-Right02.png", "Snippy/Snippy-Right03.png",
