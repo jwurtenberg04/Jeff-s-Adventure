@@ -24,8 +24,8 @@ std::optional<Collision> Platform::collide(const sf::FloatRect& hitbox) const {
 		return std::nullopt;
 	}
 	// Use the centers to determine the direction of the collision.
-	const auto center = shape.getPosition() + shape.getSize() / 2.0f;
-	const auto hitbox_center = hitbox.position + hitbox.size / 2.0f;
+	const auto center = shape.getGlobalBounds().getCenter();
+	const auto hitbox_center = hitbox.getCenter();
 	Direction direction;
 	if (overlap->size.x < overlap->size.y) {
 		// If there is less horizontal overlap than vertical overlap,
