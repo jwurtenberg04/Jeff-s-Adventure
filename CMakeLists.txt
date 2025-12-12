@@ -99,6 +99,5 @@ install(FILES
 	"jeff-standing-left.png"
 	"jeff-standing.png"
 	"mouseCursor.png"
-	"Snippy-1.png"
 	DESTINATION "."
 )

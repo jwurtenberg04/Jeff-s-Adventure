@@ -16,7 +16,7 @@ namespace filesystem = std::filesystem;
 
 // To find the asset directory, we begin at the directory containing the
 // executable and move up until we find `test_asset_path`.
-static const char* test_asset_path = "Snippy-1.png";
+static const char* test_asset_path = "eraser.png";
 
 // Return the absolute path to the directory containing all of the assets.
 // Return an empty path if the asset directory could not be found.
