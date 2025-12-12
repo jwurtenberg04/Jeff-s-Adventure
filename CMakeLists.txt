@@ -76,7 +76,7 @@ endif()
 install(TARGETS jeffs-adventure DESTINATION ".")
 
 # NOTE: "Directory names given as relative paths are interpreted [wrt] the current source directory."
-# Source: https://cmake.org/cmake/help/latest/command/install.html#directory
+# Source: https://cmake.org/cmake/help/v3.25/command/install.html#directory
 install(
 	# The final slash ensures that the contents of the `bin/` directory are
 	# installed directly under the installation directory.
@@ -92,7 +92,7 @@ install(
 )
 
 # NOTE: "File names given as relative paths are interpreted [wrt] the current source directory."
-# Source: https://cmake.org/cmake/help/latest/command/install.html#files
+# Source: https://cmake.org/cmake/help/v3.25/command/install.html#files
 install(FILES
 	"eraser.png"
 	"jeff's-adventure-background-1.png"

@@ -6,7 +6,7 @@
 
 To build Jeff's Adventure, you'll need to have [CMake](https://cmake.org/) and [SFML](https://www.sfml-dev.org/) already set up. This project doesn't download SFML for you. If you're using Linux and you've installed SFML through your system package manager, building *should* just work.
 
-If you're on Windows, you'll need to download the [pre-compiled SFML libraries](https://www.sfml-dev.org/download.php) or build SFML yourself. Then you need to copy the correct files into this repository:
+If you're on Windows, you'll need to download the [pre-compiled SFML libraries](https://www.sfml-dev.org/download/) or build SFML yourself. Then you need to copy the correct files into this repository:
 
 - Shared/dynamic libraries (such as DLLs) should go into `bin/`.
 - Static libraries (such as `.a` files) should go into `lib/`.
